@@ -157,7 +157,7 @@ module.exports = React.createClass( {
 			}
 
 			if ( this.props.commentFollowersList.response.data && this.props.commentFollowersList.response.data.total ) {
-				commentFollowURL = '/stats/follows/comment/' + this.props.site.slug;
+				commentFollowURL = '/stats/follows/comment/' + ( this.props.site ? this.props.site.slug : '' );
 				commentFollowers = (
 					<div className="module-content-text module-content-text-stat">
 						<p>
