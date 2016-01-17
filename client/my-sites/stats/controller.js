@@ -162,10 +162,10 @@ module.exports = {
 				sites.once( 'change', function() {
 					page( context.path );
 				} );
-				return;
+			} else {
+				// site is not in the user's site list
+				next();
 			}
-			// site is not in the user's site list
-			next();
 		}
 
 		if ( site && site.options && typeof site.options.gmt_offset !== 'undefined' ) {
@@ -370,9 +370,9 @@ module.exports = {
 					sites.once( 'change', function() {
 						page( context.path );
 					} );
-					return;
+				} else {
+					next();
 				}
-				next();
 			}
 
 			if ( currentSite && currentSite.domain ) {
@@ -575,10 +575,10 @@ module.exports = {
 				sites.once( 'change', function() {
 					page( context.path );
 				} );
-				return;
+			} else {
+				// site is not in the user's site list
+				window.location = '/stats';
 			}
-			// site is not in the user's site list
-			window.location = '/stats';
 		} else if ( 0 === activeFilter.length || -1 === validModules.indexOf( context.params.module ) ) {
 			next();
 		} else {
@@ -678,10 +678,10 @@ module.exports = {
 				sites.once( 'change', function() {
 					page( context.path );
 				} );
-				return;
+			} else {
+				// site is not in the user's site list
+				window.location = '/stats';
 			}
-			// site is not in the user's site list
-			window.location = '/stats';
 		} else {
 			const siteDomain = ( site && ( typeof site.slug !== 'undefined' ) )
 				? site.slug : route.getSiteFragment( context.path );
@@ -733,10 +733,10 @@ module.exports = {
 				sites.once( 'change', function() {
 					page( context.path );
 				} );
-				return;
+			} else {
+				// site is not in the user's site list
+				window.location = '/stats';
 			}
-			// site is not in the user's site list
-			window.location = '/stats';
 		} else {
 			pageNum = parseInt( pageNum, 10 );
 
