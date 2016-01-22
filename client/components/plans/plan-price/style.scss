@@ -40,7 +40,7 @@
 	}
 
 	.plan-price__billing-period {
-		display: block;
+		display: inline;
 		opacity: .7;
 	}
 
@@ -57,6 +57,12 @@
 	.plan-price__billing-period {
 		margin-left: 3px;
 	}
+
+	.plans-compare {
+		.plan-header .plan-price {
+			padding: 0;
+		}
+	}
 }
 
 @mixin plans-in-three-columns() {
@@ -67,6 +73,12 @@
 
 	.plan-price__billing-period {
 		display: block;
+	}
+
+	.plans-compare {
+		.plan-header .plan-price {
+			font-size: 16px;
+		}
 	}
 }
 
