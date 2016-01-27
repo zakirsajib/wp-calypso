@@ -17,6 +17,7 @@ import StatsModuleHeader from '../stats-module/header';
 import StatsModulePlaceholder from '../stats-module/placeholder';
 import StatsModuleContent from '../stats-module/content-text';
 import StatsModuleSelectDropdown from '../stats-module/select-dropdown';
+import SectionHeader from 'components/section-header';
 
 export default React.createClass( {
 	displayName: 'StatsComments',
@@ -121,7 +122,7 @@ export default React.createClass( {
 		const classes = classNames(
 			'stats-module',
 			{
-				'is-expanded': this.state.showModule,
+				'is-expanded': true,
 				'is-loading': ! data,
 				'is-showing-info': this.state.showInfo,
 				'has-no-data': noData,
@@ -130,56 +131,51 @@ export default React.createClass( {
 		);
 
 		return (
-			<Card className={ classes }>
-				<StatsModuleHeader
-					siteId={ site ? site.ID : null }
-					path={ path }
-					title={ this.translate( 'Comments' ) }
-					showInfo={ showInfo }
-					showModule={ showModule }
-					onActionClick={ this.updateHeaderState } />
+			<div>
+				<SectionHeader label={ this.translate( 'Comments' ) }></SectionHeader>
+				<Card className={ classes }>
+					<div className="module-content">
+						<StatsModuleContent className="module-content-text-info">
+							<p>{ this.translate( 'If you allow comments on your site, track your top commenters and discover what content sparks the liveliest conversations, based on the most recent 1,000 comments.' ) }</p>
+							<ul className="documentation">
+								<li><a href="http://en.support.wordpress.com/enable-disable-comments/" target="_blank"><Gridicon icon="help-outline" /> { this.translate( 'How do I turn on/off comments?' ) }</a></li>
+								<li><a href="http://en.support.wordpress.com/category/comments/" target="_blank"><Gridicon icon="folder" /> { this.translate( 'About Comments' ) }</a></li>
+							</ul>
+						</StatsModuleContent>
 
-				<div className="module-content">
-					<StatsModuleContent className="module-content-text-info">
-						<p>{ this.translate( 'If you allow comments on your site, track your top commenters and discover what content sparks the liveliest conversations, based on the most recent 1,000 comments.' ) }</p>
-						<ul className="documentation">
-							<li><a href="http://en.support.wordpress.com/enable-disable-comments/" target="_blank"><Gridicon icon="help-outline" /> { this.translate( 'How do I turn on/off comments?' ) }</a></li>
-							<li><a href="http://en.support.wordpress.com/category/comments/" target="_blank"><Gridicon icon="folder" /> { this.translate( 'About Comments' ) }</a></li>
-						</ul>
-					</StatsModuleContent>
+						{ ( noData && ! hasError ) ? <StatsErrorPanel className="is-empty-message" message={ this.translate( 'No comments posted' ) } /> : null }
 
-					{ ( noData && ! hasError ) ? <StatsErrorPanel className="is-empty-message" message={ this.translate( 'No comments posted' ) } /> : null }
+						<StatsModuleSelectDropdown
+							options={ selectOptions }
+							onSelect={ this.changeFilter } />
 
-					<StatsModuleSelectDropdown
-						options={ selectOptions }
-						onSelect={ this.changeFilter } />
+						{ this.renderCommentFollowers() }
 
-					{ this.renderCommentFollowers() }
+						{ hasError ? <StatsErrorPanel className="network-error" /> : null }
 
-					{ hasError ? <StatsErrorPanel className="network-error" /> : null }
+						<CommentTab
+							name="Top Commenters"
+							value={ this.translate( 'Comments' ) }
+							label={ this.translate( 'Author' ) }
+							dataList={ commentsList }
+							dataKey="authors"
+							followList={ followList }
+							isActive={ 'top-authors' === activeFilter } />
 
-					<CommentTab
-						name="Top Commenters"
-						value={ this.translate( 'Comments' ) }
-						label={ this.translate( 'Author' ) }
-						dataList={ commentsList }
-						dataKey="authors"
-						followList={ followList }
-						isActive={ 'top-authors' === activeFilter } />
+						<CommentTab
+							name="Most Commented"
+							value={ this.translate( 'Comments' ) }
+							label={ this.translate( 'Title' ) }
+							dataList={ commentsList }
+							dataKey="posts"
+							followList={ followList }
+							isActive={ 'top-content' === activeFilter } />
 
-					<CommentTab
-						name="Most Commented"
-						value={ this.translate( 'Comments' ) }
-						label={ this.translate( 'Title' ) }
-						dataList={ commentsList }
-						dataKey="posts"
-						followList={ followList }
-						isActive={ 'top-content' === activeFilter } />
-
-					{ this.renderSummary }
-					<StatsModulePlaceholder isLoading={ ! data } />
-				</div>
-			</Card>
+						{ this.renderSummary }
+						<StatsModulePlaceholder isLoading={ ! data } />
+					</div>
+				</Card>
+			</div>
 		);
 	}
 } );

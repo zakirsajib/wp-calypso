@@ -18,7 +18,9 @@ var toggle = require( '../mixin-toggle' ),
 	skeleton = require( '../mixin-skeleton' ),
 	analytics = require( 'analytics' ),
 	Card = require( 'components/card' ),
-	Gridicon = require( 'components/gridicon' );
+	Gridicon = require( 'components/gridicon' ),
+	SectionHeader = require( 'components/section-header' ),
+	Button = require( 'components/button' );
 
 module.exports = React.createClass( {
 	displayName: 'StatModuleFollowers',
@@ -161,10 +163,6 @@ module.exports = React.createClass( {
 				);
 		}
 
-		moduleHeaderTitle = (
-			<h4 className="module-header-title"><a href={ summaryPageLink }>{ this.translate( 'Followers' ) }</a></h4>
-			);
-
 		if ( ( wpcomData && wpcomData.viewAll ) || ( emailData && emailData.viewAll ) ) {
 			viewSummary = (
 				<div key='view-all' className='module-expand'>
@@ -174,56 +172,49 @@ module.exports = React.createClass( {
 		}
 
 		return (
-			<Card className={ classNames.apply( null, classes ) }>
-				<div className="followers">
-					<div className="module-header">
-						{ moduleHeaderTitle }
-						<ul className="module-header-actions">
-							<li className="module-header-action toggle-info">
-								<a href="#" className="module-header-action-link" aria-label={ this.translate( 'Show or hide panel information', { context: 'Stats panel action' } ) } title={ this.translate( 'Show or hide panel information', { context: 'Stats panel action' } ) } onClick={ this.toggleInfo } >
-									<Gridicon icon={ infoIcon } />
-								</a>
-							</li>
-							{ moduleToggle }
-						</ul>
-					</div>
-
-					<div className="module-content">
-						<div className="module-content-text module-content-text-info">
-							<p>{ this.translate( 'Keep track of your overall number of followers, and how long each one has been following your site.' ) }</p>
-							<ul className="documentation">
-								<li><a href="http://en.support.wordpress.com/followers/" target="_blank"><Gridicon icon="folder" /> { this.translate( 'About Followers' ) }</a></li>
-							</ul>
-						</div>
-
-						{ noData && ! hasError ? <ErrorPanel className='is-empty-message' message={ this.translate( 'No followers' ) } /> : null }
-
-						{ this.filterSelect() }
-
-						<div className="tab-content wpcom-followers stats-async-metabox-wrapper">
-							<div className="module-content-text module-content-text-stat">
-								{ wpcomTotalFollowers }
-							</div>
-							<StatsListLegend value={ this.translate( 'Since' ) } label={ this.translate( 'Follower' ) } />
-							{ wpcomFollowers }
-							{ this.props.wpcomFollowersList.isError() ? <ErrorPanel className="is-error" /> : null }
-						</div>
-
-						<div className="tab-content email-followers stats-async-metabox-wrapper">
-							<div className="module-content-text module-content-text-stat">
-								{ emailTotalFollowers }
+			<div>
+				<SectionHeader label={ this.translate( 'Followers' ) }>
+					<Button compact borderless href={ summaryPageLink }><Gridicon icon="stats-alt" /></Button>
+				</SectionHeader>
+				<Card className={ classNames.apply( null, classes ) }>
+					<div className="followers">
+						<div className="module-content">
+							<div className="module-content-text module-content-text-info">
+								<p>{ this.translate( 'Keep track of your overall number of followers, and how long each one has been following your site.' ) }</p>
+								<ul className="documentation">
+									<li><a href="http://en.support.wordpress.com/followers/" target="_blank"><Gridicon icon="folder" /> { this.translate( 'About Followers' ) }</a></li>
+								</ul>
 							</div>
 
-							<StatsListLegend value={ this.translate( 'Since' ) } label={ this.translate( 'Follower' ) } />
-							{ emailFollowers }
-							{ this.props.emailFollowersList.isError() ? <ErrorPanel className={ 'network-error' } /> : null }
-						</div>
+							{ noData && ! hasError ? <ErrorPanel className='is-empty-message' message={ this.translate( 'No followers' ) } /> : null }
 
-						<StatsModulePlaceholder isLoading={ isLoading } />
+							{ this.filterSelect() }
+
+							<div className="tab-content wpcom-followers stats-async-metabox-wrapper">
+								<div className="module-content-text module-content-text-stat">
+									{ wpcomTotalFollowers }
+								</div>
+								<StatsListLegend value={ this.translate( 'Since' ) } label={ this.translate( 'Follower' ) } />
+								{ wpcomFollowers }
+								{ this.props.wpcomFollowersList.isError() ? <ErrorPanel className="is-error" /> : null }
+							</div>
+
+							<div className="tab-content email-followers stats-async-metabox-wrapper">
+								<div className="module-content-text module-content-text-stat">
+									{ emailTotalFollowers }
+								</div>
+
+								<StatsListLegend value={ this.translate( 'Since' ) } label={ this.translate( 'Follower' ) } />
+								{ emailFollowers }
+								{ this.props.emailFollowersList.isError() ? <ErrorPanel className={ 'network-error' } /> : null }
+							</div>
+
+							<StatsModulePlaceholder isLoading={ isLoading } />
+						</div>
+						{ viewSummary }
 					</div>
-					{ viewSummary }
-				</div>
-			</Card>
+				</Card>
+			</div>
 		);
 	}
 } );

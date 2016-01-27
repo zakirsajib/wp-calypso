@@ -13,6 +13,8 @@ import Card from 'components/card';
 import Gridicon from 'components/gridicon';
 import StatsTabs from '../stats-tabs';
 import StatsTab from '../stats-tabs/tab';
+import Button from 'components/button';
+import SectionHeader from 'components/section-header';
 
 export default React.createClass( {
 	displayName: 'StatsSiteOverview',
@@ -50,46 +52,44 @@ export default React.createClass( {
 			headerPath = route.getStatsDefaultSitePage( site.slug );
 		}
 
+		if( ! this.props.summaryData ) {
+			return;
+		}
+
 		return (
-			<Card key={ site.ID } className="stats__overview stats-module is-site-overview">
-				<div className="module-header">
-					<h3 className="module-header-title">
-						<a href={ headerPath } className="module-header__link">
-							{ icon }
-							<span className="module-header__right-icon">
-								<Gridicon icon="stats" />
-							</span>
-							{ title }
-						</a>
-					</h3>
-				</div>
-				<StatsTabs>
-					<StatsTab
-						className={ this.isValueLow( views ) ? 'is-low' : null }
-						href={ siteStatsPath }
-						gridicon="visible"
-						label={ this.translate( 'Views', { context: 'noun' } ) }
-						value={ views } />
-					<StatsTab
-						className={ this.isValueLow( visitors ) ? 'is-low' : null }
-						href={ siteStatsPath + '?tab=visitors' }
-						gridicon="user"
-						label={ this.translate( 'Visitors', { context: 'noun' } ) }
-						value={ visitors } />
-					<StatsTab
-						className={ this.isValueLow( likes ) ? 'is-low' : null }
-						href={ siteStatsPath + '?tab=likes' }
-						gridicon="star"
-						label={ this.translate( 'Likes', { context: 'noun' } ) }
-						value={ likes } />
-					<StatsTab
-						className={ this.isValueLow( comments ) ? 'is-low' : null }
-						href={ siteStatsPath + '?tab=comments' }
-						gridicon="comment"
-						label={ this.translate( 'Comments', { context: 'noun' } ) }
-						value={ comments } />
-				</StatsTabs>
-			</Card>
+			<div>
+				<SectionHeader label={ title }>
+					<Button borderless compact href={ headerPath }><Gridicon icon="stats-alt" /></Button>
+				</SectionHeader>
+				<Card key={ site.ID } className="stats__overview stats-module is-site-overview">
+					<StatsTabs>
+						<StatsTab
+							className={ this.isValueLow( views ) ? 'is-low' : null }
+							href={ siteStatsPath }
+							gridicon="visible"
+							label={ this.translate( 'Views', { context: 'noun' } ) }
+							value={ views } />
+						<StatsTab
+							className={ this.isValueLow( visitors ) ? 'is-low' : null }
+							href={ siteStatsPath + '?tab=visitors' }
+							gridicon="user"
+							label={ this.translate( 'Visitors', { context: 'noun' } ) }
+							value={ visitors } />
+						<StatsTab
+							className={ this.isValueLow( likes ) ? 'is-low' : null }
+							href={ siteStatsPath + '?tab=likes' }
+							gridicon="star"
+							label={ this.translate( 'Likes', { context: 'noun' } ) }
+							value={ likes } />
+						<StatsTab
+							className={ this.isValueLow( comments ) ? 'is-low' : null }
+							href={ siteStatsPath + '?tab=comments' }
+							gridicon="comment"
+							label={ this.translate( 'Comments', { context: 'noun' } ) }
+							value={ comments } />
+					</StatsTabs>
+				</Card>
+			</div>
 		);
 	}
 } );
