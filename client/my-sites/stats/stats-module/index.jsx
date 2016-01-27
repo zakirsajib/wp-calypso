@@ -19,7 +19,8 @@ var toggle = require( '../mixin-toggle' ),
 	DatePicker = require( '../stats-date-picker' ),
 	Card = require( 'components/card' ),
 	StatsModulePlaceholder = require( './placeholder' ),
-	Gridicon = require( 'components/gridicon' );
+	Gridicon = require( 'components/gridicon' ),
+	SectionHeader = require( 'components/section-header' );
 
 module.exports = React.createClass( {
 	displayName: 'StatModule',
@@ -104,29 +105,25 @@ module.exports = React.createClass( {
 		}
 
 		return (
-			<Card className={ classes }>
-				<div className={ this.props.className }>
-					<div className="module-header">
-						{ moduleHeaderTitle }
-						<ul className="module-header-actions">
-							<li className="module-header-action toggle-info"><a href="#" className="module-header-action-link" aria-label={ this.translate( 'Show or hide panel information', { context: 'Stats panel action' } ) } title={ this.translate( 'Show or hide panel information', { context: 'Stats panel action' } ) } onClick={ this.toggleInfo } ><Gridicon icon={ infoIcon } /></a></li>
-							{ moduleToggle }
-						</ul>
+			<div>
+				<SectionHeader label={ headerLink }></SectionHeader>
+				<Card className={ classes }>
+					<div className={ this.props.className }>
+						<div className="module-content">
+							{ ( noData && ! hasError ) ? <ErrorPanel className="is-empty-message" message={ this.props.moduleStrings.empty } /> : null }
+							{ hasError ? <ErrorPanel className={ 'network-error' } /> : null }
+							<StatsListLegend value={ this.props.moduleStrings.value } label={ this.props.moduleStrings.item } />
+							<StatsModulePlaceholder isLoading={ isLoading } />
+							{ statsList }
+							{ this.props.summary
+								? <DownloadCsv period={ this.props.period } path={ this.props.path } site={ this.props.site } dataList={ this.props.dataList } />
+							: null }
+						</div>
+						{ viewSummary }
 					</div>
-					<div className="module-content">
-						<InfoPanel module={ this.props.path } />
-						{ ( noData && ! hasError ) ? <ErrorPanel className="is-empty-message" message={ this.props.moduleStrings.empty } /> : null }
-						{ hasError ? <ErrorPanel className={ 'network-error' } /> : null }
-						<StatsListLegend value={ this.props.moduleStrings.value } label={ this.props.moduleStrings.item } />
-						<StatsModulePlaceholder isLoading={ isLoading } />
-						{ statsList }
-						{ this.props.summary
-							? <DownloadCsv period={ this.props.period } path={ this.props.path } site={ this.props.site } dataList={ this.props.dataList } />
-						: null }
-					</div>
-					{ viewSummary }
-				</div>
-			</Card>
+				</Card>
+			</div>
+
 		);
 	}
 } );
