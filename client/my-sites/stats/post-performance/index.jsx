@@ -20,7 +20,6 @@ import Gridicon from 'components/gridicon';
 
 const PostListStore = new PostListStoreFactory;
 
-
 function getPostState() {
 	const posts = PostListStore.getAll();
 	const post = posts.length ? posts[ 0 ] : null;
