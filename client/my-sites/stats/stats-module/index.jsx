@@ -20,7 +20,8 @@ var toggle = require( '../mixin-toggle' ),
 	Card = require( 'components/card' ),
 	StatsModulePlaceholder = require( './placeholder' ),
 	Gridicon = require( 'components/gridicon' ),
-	SectionHeader = require( 'components/section-header' );
+	SectionHeader = require( 'components/section-header' ),
+	Button = require( 'components/button' );
 
 module.exports = React.createClass( {
 	displayName: 'StatModule',
@@ -60,7 +61,6 @@ module.exports = React.createClass( {
 			noData = this.props.dataList.isEmpty(),
 			hasError = this.props.dataList.isError(),
 			headerLink = this.props.moduleStrings.title,
-			infoIcon = this.state.showInfo ? 'info' : 'info-outline',
 			isLoading = this.props.dataList.isLoading(),
 			moduleHeaderTitle,
 			statsList,
@@ -86,9 +86,6 @@ module.exports = React.createClass( {
 		}
 
 		if ( !this.props.summary ) {
-			moduleHeaderTitle = (
-				<h4 className="module-header-title">{ headerLink }</h4>
-			);
 			moduleToggle = (
 				<li className="module-header-action toggle-services"><a href="#" className="module-header-action-link" aria-label={ this.translate( 'Expand or collapse panel', { context: 'Stats panel action' } ) } title={ this.translate( 'Expand or collapse panel', { context: 'Stats panel action' } ) } onClick={ this.toggleModule }><Gridicon icon="chevron-down" /></a></li>
 			);
@@ -106,8 +103,18 @@ module.exports = React.createClass( {
 
 		return (
 			<div>
-				<SectionHeader label={ headerLink }></SectionHeader>
-				<Card className={ classes }>
+				<SectionHeader label={ this.props.moduleStrings.title }>
+					{ this.hasSummaryPage()
+					 	? ( <Button
+								compact
+								borderless
+								onClick={ this.viewAllHandler }
+								>
+								<Gridicon icon="stats-alt" />
+							</Button> )
+					 	: null }
+				</SectionHeader>
+				<Card compact className={ classes }>
 					<div className={ this.props.className }>
 						<div className="module-content">
 							{ ( noData && ! hasError ) ? <ErrorPanel className="is-empty-message" message={ this.props.moduleStrings.empty } /> : null }

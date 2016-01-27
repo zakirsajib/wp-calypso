@@ -18,7 +18,9 @@ var toggle = require( '../mixin-toggle' ),
 	Card = require( 'components/card' ),
 	StatsModulePlaceholder = require( '../stats-module/placeholder' ),
 	StatsListLegend = require( '../stats-list/legend' ),
-	Gridicon = require( 'components/gridicon' );
+	Gridicon = require( 'components/gridicon' ),
+	SectionHeader = require( 'components/section-header' ),
+	Button = require( 'components/button' );
 
 module.exports = React.createClass( {
 	displayName: 'StatCountries',
@@ -107,41 +109,33 @@ module.exports = React.createClass( {
 		countries = <StatsList moduleName={ this.props.path } data={ data } />;
 
 		return (
-			<Card className={ classNames.apply( null, classes ) }>
-				<div className="countryviews">
-					<div className="module-header">
-						{ moduleHeaderTitle }
-						<ul className="module-header-actions">
-							<li className="module-header-action toggle-info">
-								<a href="#" className="module-header-action-link" aria-label={ this.translate( 'Show or hide panel information', { textOnly: true, context: 'Stats panel action' } ) } title={ this.translate( 'Show or hide panel information', { textOnly: true, context: 'Stats panel action' } ) } onClick={ this.toggleInfo } >
-									<Gridicon icon={ infoIcon } />
-								</a>
-							</li>
-							{ moduleToggle }
-						</ul>
-					</div>
-					<div className="module-content">
-						<div className="module-content-text module-content-text-info">
-							<p>{ this.translate( 'Explore the list to see which countries and regions generate the most traffic to your site.' ) }</p>
-							<ul className="documentation">
-								<li><a href="http://en.support.wordpress.com/stats/#views-by-country" target="_blank"><Gridicon icon="info-outline" /> { this.translate( 'About Countries' ) }</a></li>
-							</ul>
-						</div>
-						{ ( noData && ! hasError ) ? <ErrorPanel className="is-empty-message" message={ this.translate( 'No countries recorded' ) } /> : null }
+			<div>
+				<SectionHeader label={ this.translate( 'Countries' ) }></SectionHeader>
+					<Card className={ classNames.apply( null, classes ) }>
+						<div className="countryviews">
+							<div className="module-content">
+								<div className="module-content-text module-content-text-info">
+									<p>{ this.translate( 'Explore the list to see which countries and regions generate the most traffic to your site.' ) }</p>
+									<ul className="documentation">
+										<li><a href="http://en.support.wordpress.com/stats/#views-by-country" target="_blank"><Gridicon icon="info-outline" /> { this.translate( 'About Countries' ) }</a></li>
+									</ul>
+								</div>
+								{ ( noData && ! hasError ) ? <ErrorPanel className="is-empty-message" message={ this.translate( 'No countries recorded' ) } /> : null }
 
-						{ geochart }
-						<StatsModulePlaceholder className="is-block" isLoading={ isLoading } />
-						<StatsListLegend value={ this.translate( 'Views' ) } label={ this.translate( 'Country' ) } />
-						<StatsModulePlaceholder isLoading={ isLoading } />
-						{ countries }
-						{ this.props.summary
-							? <DownloadCsv period={ this.props.period } path={ this.props.path } site={ this.props.site } dataList={ this.props.dataList } />
-							: null }
-						{ hasError ? <ErrorPanel className={ 'network-error' } /> : null }
-					</div>
-					{ viewSummary }
-				</div>
-			</Card>
+								{ geochart }
+								<StatsModulePlaceholder className="is-block" isLoading={ isLoading } />
+								<StatsListLegend value={ this.translate( 'Views' ) } label={ this.translate( 'Country' ) } />
+								<StatsModulePlaceholder isLoading={ isLoading } />
+								{ countries }
+								{ this.props.summary
+									? <DownloadCsv period={ this.props.period } path={ this.props.path } site={ this.props.site } dataList={ this.props.dataList } />
+									: null }
+								{ hasError ? <ErrorPanel className={ 'network-error' } /> : null }
+							</div>
+							{ viewSummary }
+						</div>
+					</Card>
+			</div>
 		);
 	}
 } );
