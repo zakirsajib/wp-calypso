@@ -175,6 +175,17 @@
 			}
 		}
 	}
+
+	.plans-compare {
+		.plan-header {
+			.plan-header__title {
+				&:before {
+					position: static;
+					margin-bottom: 5px;
+				}
+			}
+		}
+	}
 }
 
 .plans.has-sidebar {
