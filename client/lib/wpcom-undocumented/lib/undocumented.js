@@ -1607,9 +1607,15 @@ Undocumented.prototype.requestTransferCode = function( options, fn ) {
 	this.wpcom.req.post( '/domains/' + domainName + '/transfer', data, fn );
 };
 
-Undocumented.prototype.enableDomainLocking = function( domainName, fn ) {
+Undocumented.prototype.enableDomainLocking = function( { domainName, enablePrivacy, declineTransfer }, fn ) {
 	var data = {
-		domainStatus: JSON.stringify( { command: 'lock-domain' } )
+		domainStatus: JSON.stringify( {
+			command: 'lock-domain',
+			payload: {
+				enable_privacy: enablePrivacy,
+				decline_transfer: declineTransfer
+			}
+		} )
 	};
 
 	this.wpcom.req.post( '/domains/' + domainName + '/transfer', data, fn );

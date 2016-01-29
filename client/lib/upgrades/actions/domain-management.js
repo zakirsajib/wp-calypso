@@ -440,8 +440,8 @@ function requestTransferCode( options, onComplete ) {
 	} );
 }
 
-function enableDomainLocking( domainName, onComplete ) {
-	wpcom.enableDomainLocking( domainName, ( error ) => {
+function enableDomainLocking( options, onComplete ) {
+	wpcom.enableDomainLocking( options, ( error ) => {
 		if ( error ) {
 			onComplete( error );
 			return;
@@ -449,7 +449,7 @@ function enableDomainLocking( domainName, onComplete ) {
 
 		Dispatcher.handleServerAction( {
 			type: ActionTypes.DOMAIN_LOCKING_ENABLE_COMPLETED,
-			domainName
+			domainName: options.domainName
 		} );
 
 		onComplete( null );
