@@ -55,6 +55,14 @@ export default React.createClass( {
 
 	render() {
 		const buttons = [
+			<div className="editor-contact-form-modal__secondary-actions">
+				<FormButton
+					key="add"
+					isPrimary={ false }
+					onClick={ () => { console.log( 'add new field' ) } } >
+					{ this.translate( 'Add New Field' ) }
+				</FormButton>
+			</div>,
 			<FormButton
 				key="save"
 				onClick={ () => {
@@ -92,35 +100,12 @@ export default React.createClass( {
 			</FormButton>
 		];
 
-		// const sortables = () => (
-		// 	<SortableList direction="vertical">
-		// 		<FoldableCard
-		// 			header={ 'Name' }
-		// 			summary={ <FormButton scary={ true }>Remove</FormButton> }
-		// 			expandedSummary={ <FormButton scary={ true }>Remove</FormButton> } >
-		// 			<p>Name</p>
-		// 		</FoldableCard>
-		// 		<FoldableCard
-		// 			header={ 'Email' }
-		// 			summary={ <FormButton scary={ true }>Remove</FormButton> }
-		// 			expandedSummary={ <FormButton scary={ true }>Remove</FormButton> } >
-		// 			<p>Name</p>
-		// 		</FoldableCard>
-		// 		<FoldableCard
-		// 			header={ 'Message' }
-		// 			summary={ <FormButton scary={ true }>Remove</FormButton> }
-		// 			expandedSummary={ <FormButton scary={ true }>Remove</FormButton> } >
-		// 			<p>Name</p>
-		// 		</FoldableCard>
-		// 	</SortableList>
-		// );
-
 		return (
 			<Dialog
 				isVisible={ this.props.showDialog }
 				onClose={ this.props.onClose }
 				buttons={ buttons }
-				additionalClassNames="contact-form__dialog"
+				additionalClassNames="editor-contact-form-modal"
 			>
 				<SectionNav selectedText="Form Fields">
 					<SectionNavTabs>
@@ -128,11 +113,21 @@ export default React.createClass( {
 						<SectionNavTabItem>Settings</SectionNavTabItem>
 					</SectionNavTabs>
 				</SectionNav>
-				<div className="contact-form__form-fields">
+				<div className="editor-contact-form-modal__form-fields">
 					<Field />
-					<FormFieldset>
-						<FormButton key="add">Add  New Field</FormButton>
-					</FormFieldset>
+					<Field />
+					<Field />
+					<Field />
+					<Field />
+					<Field />
+					<Field />
+					<Field />
+					<Field />
+					<Field />
+					<Field />
+					<Field />
+					<Field />
+					<Field />
 				</div>
 			</Dialog>
 		);

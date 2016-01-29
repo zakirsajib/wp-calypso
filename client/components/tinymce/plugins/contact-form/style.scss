@@ -1,13 +1,63 @@
-.contact-form__dialog {
-	width: 75%;
+.editor-contact-form-modal {
 	padding: 0;
+}
 
-	.dialog__action-buttons {
-		margin: 0;
+.editor-contact-form-modal.dialog.card {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+
+	@include breakpoint( ">660px" ) {
+		top: 5%;
+		bottom: 5%;
+		left: 5%;
+		right: 5%;
+		width: 90%;
 	}
 
-	.contact-form__form-fields {
-		margin-left: 16px;
-		margin-right: 16px;
+	@include breakpoint( ">960px" ) {
+		left: 12.5%;
+		right: 12.5%;
+		width: 75%;
 	}
+}
+
+.editor-contact-form-modal .dialog__content {
+	position: static;
+	color: $gray-dark;
+}
+
+.editor-contact-form-modal .section-nav {
+	padding: 0 16px;
+
+	@include breakpoint( ">660px" ) {
+		padding: 0;
+	}
+}
+
+.editor-contact-form-modal__form-fields {
+	padding: 5px 20px;
+	top: 65px;
+	bottom: 74px;
+	left: 0;
+	right: 0;
+	overflow-y: auto;
+	position: absolute;
+}
+
+.editor-contact-form-modal .dialog__action-buttons {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	margin: 0;
+}
+
+.editor-contact-form-modal__secondary-actions {
+	float: left;
+	display: flex;
+	justify-content: center;
+	height: 40px;
 }
