@@ -439,26 +439,6 @@ module.exports = React.createClass( {
 					</form>
 				</Card>
 
-				<SectionHeader label={ this.translate( 'Related Posts' ) }>
-					<Button
-						compact={ true }
-						onClick={ this.submitForm }
-						primary={ true }
-
-						type="submit"
-						disabled={ this.state.fetchingSettings || this.state.submittingForm }>
-							{ this.state.submittingForm
-								? this.translate( 'Saving…' )
-								: this.translate( 'Save Settings' )
-							}
-					</Button>
-				</SectionHeader>
-				<Card>
-					<form onChange={ this.markChanged }>
-						{ this.relatedPostsOptions() }
-					</form>
-				</Card>
-
 				{ this.props.site.jetpack
 					? <div>
 						<SectionHeader label={ this.translate( 'Jetpack' ) }>
