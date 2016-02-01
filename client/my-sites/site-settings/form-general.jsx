@@ -18,7 +18,6 @@ var Card = require( 'components/card' ),
 	notices = require( 'notices' ),
 	analytics = require( 'analytics' ),
 	dirtyLinkedState = require( 'lib/mixins/dirty-linked-state' ),
-	Button = require( 'components/button' ),
 	Gridicon = require( 'components/gridicon' ),
 	FormInput = require( 'components/forms/form-text-input' ),
 	FormFieldset = require( 'components/forms/form-fieldset' ),
@@ -365,8 +364,6 @@ module.exports = React.createClass( {
 			</FormFieldset>
 		);
 	},
-
-
 
 	render: function() {
 		var site = this.props.site;
