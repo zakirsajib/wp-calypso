@@ -195,6 +195,10 @@ const flows = {
 		description: 'Alternative theme selection for the users who clicked "Create blog" on the two-button homepage.',
 		lastModified: '2016-02-12'
 	},
+
+	'jetpack-connect': {
+		steps: [ 'url-entry', 'plans' ]
+	}
 };
 
 function removeUserStepFromFlow( flow ) {

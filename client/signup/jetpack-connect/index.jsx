@@ -3,14 +3,21 @@
  */
 import React from 'react';
 
-module.exports = React.createClass( {
+/**
+* Internal dependencies
+**/
+import Main from 'components/main';
+import Card from 'components/card';
+import FormTextInput from 'components/forms/form-text-input';
+
+export default React.createClass( {
 	displayName: 'JetpackConnect',
 
 	render: function() {
 		return (
-			<div>
-				Jetpack Connect
-			</div>
+			<Main>
+				<Card>Jetpack Connect</Card>
+			</Main>
 		);
 	}
 } );
