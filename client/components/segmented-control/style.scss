@@ -23,7 +23,7 @@
 
 	&:last-of-type {
 		.segmented-control__link {
-			border-right: solid 1px $blue-medium;
+			border-right: solid 1px lighten( $gray, 20% );
 			border-top-right-radius: 4px;
 			border-bottom-right-radius: 4px;
 		}
@@ -39,25 +39,25 @@
 .segmented-control__link {
 	display: block;
 	padding: 8px 12px;
-	border: solid 1px $blue-medium;
+	border: solid 1px lighten( $gray, 20% );
 	border-right: none;
 	font-size: 14px;
 	line-height: 18px;
-	color: $blue-wordpress;
+	color: $gray-dark;
 	text-align: center;
 
 	&:focus {
-		color: $link-highlight;
+		color: $gray;
 		outline: none;
 
 		.keyboard-navigation & .segmented-control__text {
-			outline: dotted 1px $blue-wordpress;
+			outline: dotted 1px $gray;
 		}
 	}
 
 	.notouch & {
 		&:hover {
-			color: $link-highlight;
+			color: $gray;
 		}
 	}
 
