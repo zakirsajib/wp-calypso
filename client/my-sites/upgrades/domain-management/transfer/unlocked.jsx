@@ -48,22 +48,35 @@ const Unlocked = React.createClass( {
 				this.setState( { submitting: false } );
 			}
 			if ( error ) {
-				notices.error(
-					this.translate(
-						'Oops! Something went wrong and your request could not be ' +
-						'processed. Please try again or {{a}}Contact Support{{/a}} if ' +
-						'you continue to have trouble.',
-						{
-							components: {
-								a: (
-									<a
-										href="https://support.wordpress.com/contact/"
-										target="_blank"/>
-								)
-							}
-						}
-					)
-				);
+				const contactLink = <a href="https://support.wordpress.com/contact/" target="_blank"/>;
+				let errorMessage;
+
+				switch ( error.error ) {
+					case 'enable_private_reg_failed':
+						errorMessage = this.translate( 'We were unable to enable Privacy Protection for your domain. ' +
+							'Please try again or {{contactLink}}Contact Support{{/contactLink}} if you continue to have trouble.',
+							{ components: { contactLink } } );
+						break;
+					case 'decline_transfer_failed':
+						errorMessage = this.translate( 'We were unable to stop the transfer for your domain. ' +
+							'Please try again or {{contactLink}}Contact Support{{/contactLink}} if you continue to have trouble.',
+							{ components: { contactLink } } );
+						break;
+					case 'lock_domain_failed':
+						errorMessage = this.translate( 'We were unable to lock your domain. ' +
+							'Please try again or {{contactLink}}Contact Support{{/contactLink}} if you continue to have trouble.',
+							{ components: { contactLink } } );
+						break;
+					default:
+						errorMessage = this.translate(
+							'Oops! Something went wrong and your request could not be ' +
+							'processed. Please try again or {{contactLink}}Contact Support{{/contactLink}} if ' +
+							'you continue to have trouble.', { components: { contactLink } }
+						);
+						break;
+				}
+
+				notices.error( errorMessage );
 			}
 		} );
 	},
