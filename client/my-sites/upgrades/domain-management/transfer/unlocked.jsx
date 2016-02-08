@@ -10,7 +10,7 @@ import Card from 'components/card';
 import SectionHeader from 'components/section-header';
 import { getSelectedDomain } from 'lib/domains';
 import Button from 'components/button';
-import { requestTransferCode, enableDomainLocking, enablePrivacyProtection, declineTransfer } from 'lib/upgrades/actions';
+import { requestTransferCode, enableDomainLocking } from 'lib/upgrades/actions';
 import notices from 'notices';
 import { promisy, displayRequestTransferCodeResponseNotice } from 'my-sites/upgrades/domain-management/transfer/shared';
 
@@ -48,7 +48,7 @@ const Unlocked = React.createClass( {
 				this.setState( { submitting: false } );
 			}
 			if ( error ) {
-				const contactLink = <a href="https://support.wordpress.com/contact/" target="_blank"/>;
+				const contactLink = <a href=" https://wordpress.com/help/contact" target="_blank"/>;
 				let errorMessage;
 
 				switch ( error.error ) {
