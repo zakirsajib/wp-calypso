@@ -3,8 +3,6 @@
  */
 var _pick = require( 'lodash/object/pick' ),
 	_assign = require( 'lodash/object/assign' ),
-	_property = require( 'lodash/utility/property' ),
-	_reject = require( 'lodash/collection/reject' ),
 	_map = require( 'lodash/collection/map' ),
 	filter = require( 'lodash/collection/filter' ),
 	_transform = require( 'lodash/object/transform' ),
@@ -87,8 +85,7 @@ PluginUtils = {
 			'update',
 			'updating',
 			'version',
-			'wp_admin_settings_page_url',
-			'wpcom'
+			'wp_admin_settings_page_url'
 		);
 	},
 
@@ -205,42 +202,6 @@ PluginUtils = {
 					returnData[ key ] = item;
 			}
 		} );
-	},
-
-	addWpcomIcon: function( plugin ) {
-		if ( plugin.slug && plugin.wpcom ) {
-			return _assign( {}, plugin, { icon: '/calypso/images/upgrades/plugins/' + plugin.slug + '.png' } );
-		}
-
-		return plugin;
-	},
-	/**
-	 * In order to handle the case in All Sites in which a plugin with the same slug is available on both
-	 * a Jetpack site and a .com site, this method ensures that the plugin appears twice in the plugins array,
-	 * with/without the wpcom flag.
-	 *
-	 * @param {Array} plugins - List of plugins
-	 * @returns {Array} - List of plugins
-	 */
-	duplicateHybridPlugins: function( plugins ) {
-		return plugins.reduce( function( result, plugin ) {
-			if ( ( plugin.wpcom && plugin.sites.some( _property( 'jetpack' ) ) ) ||
-					( ! plugin.wpcom && ! plugin.sites.every( _property( 'jetpack' ) ) ) ) {
-				// this is a plugin shared by .com and Jetpack sites, add it twice with different sites
-				return result.concat(
-					_assign( {}, plugin, {
-						sites: filter( plugin.sites, _property( 'jetpack' ) ),
-						wpcom: false
-					} ),
-					PluginUtils.addWpcomIcon( _assign( {}, plugin, {
-						sites: _reject( plugin.sites, _property( 'jetpack' ) ),
-						wpcom: true
-					} ) )
-				);
-			}
-
-			return result.concat( plugin );
-		}, [] );
 	},
 
 	normalizePluginsList: function( pluginsList ) {

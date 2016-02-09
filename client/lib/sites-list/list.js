@@ -16,7 +16,6 @@ var wpcom = require( 'lib/wp' ),
 	JetpackSite = require( 'lib/site/jetpack' ),
 	Searchable = require( 'lib/mixins/searchable' ),
 	Emitter = require( 'lib/mixins/emitter' ),
-	isBusiness = require( 'lib/products-values' ).isBusiness,
 	isPlan = require( 'lib/products-values' ).isPlan,
 	PreferencesActions = require( 'lib/preferences/actions' ),
 	PreferencesStore = require( 'lib/preferences/store' ),
@@ -554,7 +553,7 @@ SitesList.prototype.getSelectedOrAllWithPlugins = function() {
 	return this.getSelectedOrAll().filter( site => {
 		return site.capabilities &&
 			site.capabilities.manage_options &&
-			( isBusiness( site.plan ) || site.jetpack ) &&
+			site.jetpack &&
 			( site.visible || this.selected )
 	} );
 };
@@ -624,19 +623,6 @@ SitesList.prototype.canUpdateFiles = function() {
  */
 SitesList.prototype.canManageSelectedOrAll = function() {
 	return this.getSelectedOrAll().some( function( site ) {
-		if ( site.capabilities && site.capabilities.manage_options ) {
-			return true;
-		} else {
-			return false;
-		}
-	} );
-};
-/**
- * Whether the user has any jetpack site that the user can manage
- * @return bool
- */
-SitesList.prototype.canManageAnyJetpack = function() {
-	return this.getJetpack().some( function( site ) {
 		if ( site.capabilities && site.capabilities.manage_options ) {
 			return true;
 		} else {
