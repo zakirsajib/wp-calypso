@@ -9,6 +9,7 @@ import { expect } from 'chai';
 import {
 	getPost,
 	getSitePost,
+	getSitePosts,
 	isTrackingSitePostsQuery,
 	getSitePostsForQuery,
 	isRequestingSitePostsForQuery,
@@ -71,6 +72,40 @@ describe( 'selectors', () => {
 			}, 2916284, 841 );
 
 			expect( post ).to.eql( { ID: 841, site_ID: 2916284, global_ID: '3d097cb7c5473c169bba0eb8e3c6cb64', title: 'Hello World' } );
+		} );
+	} );
+
+	describe( '#getSitePosts()', () => {
+		it( 'should return null if the site has not received any posts', () => {
+			const posts = getSitePosts( {
+				posts: {
+					sitePosts: {}
+				}
+			}, 2916284 );
+
+			expect( posts ).to.be.null;
+		} );
+
+		it( 'should return an array of post objects for the site', () => {
+			const state = {
+				posts: {
+					items: {
+						'3d097cb7c5473c169bba0eb8e3c6cb64': { ID: 841, site_ID: 2916284, global_ID: '3d097cb7c5473c169bba0eb8e3c6cb64', title: 'Hello World' },
+						'6c831c187ffef321eb43a67761a525a3': { ID: 413, site_ID: 2916284, global_ID: '6c831c187ffef321eb43a67761a525a3', title: 'Ribs & Chicken' }
+					},
+					sitePosts: {
+						2916284: {
+							841: '3d097cb7c5473c169bba0eb8e3c6cb64',
+							413: '6c831c187ffef321eb43a67761a525a3'
+						}
+					}
+				}
+			};
+
+			expect( getSitePosts( state, 2916284 ) ).to.have.members( [
+				state.posts.items[ '3d097cb7c5473c169bba0eb8e3c6cb64' ],
+				state.posts.items[ '6c831c187ffef321eb43a67761a525a3' ]
+			] );
 		} );
 	} );
 
