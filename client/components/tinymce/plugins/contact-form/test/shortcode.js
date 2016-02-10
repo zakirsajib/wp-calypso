@@ -82,6 +82,14 @@ describe( 'contact form shortcode serializer', () => {
 
 		assert.equal( shortcode, '[contact-form][contact-field label="Name" type="text" required="1" /][/contact-form]' );
 	} );
+
+	it( 'should serialize a field with options', () => {
+		const shortcode = serialize( {
+			fields: [ { type: 'dropdown', label: 'options', options: 'option 1,option 2,option 3', required: true } ]
+		} );
+
+		assert.equal( shortcode, '[contact-form][contact-field label="options" type="dropdown" options="option 1,option 2,option 3" required="1" /][/contact-form]' );
+	} );
 } );
 
 describe( 'contact form shortcode deserializer', () => {
@@ -118,6 +126,14 @@ describe( 'contact form shortcode deserializer', () => {
 
 		assert.deepEqual( contactForm, {
 			fields: [ { label: 'name', type: 'text' } ]
+		} );
+	} );
+
+	it( 'should deserialize a field with options', () => {
+		const contactForm = deserialize( '[contact-form][contact-field label="options" type="dropdown" options="option 1,option 2,option 3" required="1" /][/contact-form]' );
+
+		assert.deepEqual( contactForm, {
+			fields: [ { type: 'dropdown', label: 'options', options: 'option 1,option 2,option 3', required: true } ]
 		} );
 	} );
 } );

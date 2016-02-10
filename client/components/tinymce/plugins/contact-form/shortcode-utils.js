@@ -10,7 +10,7 @@ import identity from 'lodash/utility/identity';
 import Shortcode from 'lib/shortcode';
 
 export function serialize( { to, subject, fields = [] } = {} ) {
-	const content = fields.map( ( { label, type, required } ) => {
+	const content = fields.map( ( { label, type, options, required } ) => {
 		if ( ! label || ! type ) {
 			return;
 		}
@@ -18,7 +18,7 @@ export function serialize( { to, subject, fields = [] } = {} ) {
 		let fieldShortcode = {
 			tag: 'contact-field',
 			type: 'self-closing',
-			attrs: { label, type }
+			attrs: pick( { label, type, options }, identity )
 		};
 
 		if ( required ) {
@@ -50,8 +50,8 @@ export function deserialize( shortcode ) {
 
 			while ( content && ( parsedField = Shortcode.next( 'contact-field', content ) ) ) {
 				if ( 'attrs' in parsedField.shortcode ) {
-					const { label, type, required } = parsedField.shortcode.attrs.named;
-					let field = pick( { label, type, required }, identity );
+					const { label, type, options, required } = parsedField.shortcode.attrs.named;
+					let field = pick( { label, type, options, required }, identity );
 					if ( 'required' in field ) {
 						field.required = true;
 					}
