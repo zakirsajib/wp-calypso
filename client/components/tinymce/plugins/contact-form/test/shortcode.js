@@ -100,7 +100,7 @@ describe( 'contact form shortcode deserializer', () => {
 	it( 'should deserialize a field string', () => {
 		const contactForm = deserialize( '[contact-form][contact-field label="name" type="text" /][/contact-form]' );
 
-		assert.deepEqual( contactForm, { 
+		assert.deepEqual( contactForm, {
 			fields: [ { label: 'name', type: 'text' } ]
 		} );
 	} );
@@ -108,15 +108,15 @@ describe( 'contact form shortcode deserializer', () => {
 	it( 'should deserialize a required field string', () => {
 		const contactForm = deserialize( '[contact-form][contact-field label="name" type="text" required="1" /][/contact-form]' );
 
-		assert.deepEqual( contactForm, { 
-			fields: [ { label: 'name', type: 'text', required: "1" } ]
+		assert.deepEqual( contactForm, {
+			fields: [ { label: 'name', type: 'text', required: true } ]
 		} );
 	} );
 
 	it( 'should not deserialize invalid field string', () => {
 		const contactForm = deserialize( '[contact-form][contact-field label="name" type="text" /][contact-field this is invalid [/contact-form]' );
 
-		assert.deepEqual( contactForm, { 
+		assert.deepEqual( contactForm, {
 			fields: [ { label: 'name', type: 'text' } ]
 		} );
 	} );

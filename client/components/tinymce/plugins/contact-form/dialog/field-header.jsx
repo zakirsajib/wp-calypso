@@ -12,7 +12,7 @@ export default React.createClass( {
 
 	render() {
 		return (
-			<div><div>{ this.props.name }</div><div><small>required textbox with placeholder text</small></div></div>
+			<div><div>{ this.props.name }</div><div><small>required textbox</small></div></div>
 		);
 	}
 } );

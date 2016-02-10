@@ -185,6 +185,7 @@
 
 .mce-toolbar .mce-wpcom-button.mce-contact-form button,
 .mce-toolbar .mce-wpcom-button.mce-media button {
+	color: darken( $gray, 20% );
 	height: 38px;
 	padding: 0 8px;
 	margin-top: 0px;
@@ -204,7 +205,7 @@
 	font-size: 13px;
 }
 
-.mce-toolbar .mce-wpcom-button.mce-contact-form:hover span,
+.mce-toolbar .mce-wpcom-button.mce-contact-form:hover button,
 .mce-toolbar .mce-wpcom-button.mce-media:hover span {
 	color: $gray-dark;
 }

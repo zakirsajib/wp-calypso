@@ -10,9 +10,16 @@ import { Provider } from 'react-redux';
 /**
  * Internal Dependencies
  */
-import Gridicon from 'components/gridicon';
 import ContactFormDialog from './dialog';
-import { loadForm, addDefaultField, removeField, clearForm } from 'state/ui/editor/contact-form/actions';
+import {
+	loadForm,
+	addDefaultField,
+	removeField,
+	clearForm,
+	updateToSettings,
+	updateSubjectSettings,
+	updateField
+} from 'state/ui/editor/contact-form/actions';
 import { serialize, deserialize } from './shortcode-utils';
 
 const wpcomContactForm = editor => {
@@ -34,13 +41,28 @@ const wpcomContactForm = editor => {
 	editor.addCommand( 'wpcomContactForm', content => {
 		if ( content ) {
 			store.dispatch( loadForm( deserialize( content ) ) );
+		} else {
+			store.dispatch( clearForm() );
 		}
 
-		function renderModal( visibility = 'show' ) {
+		function renderModal( visibility = 'show', activeTab = 'fields' ) {
 			render(
 				createElement( Provider, { store },
 					createElement( ContactFormDialog, {
 						showDialog: visibility === 'show',
+						activeTab,
+						onChangeTabs( tab ) {
+							renderModal( 'show', tab );
+						},
+						onUpdateToSettings( to ) {
+							store.dispatch( updateToSettings( to ) );
+						},
+						onUpdateSubjectSettings( subject ) {
+							store.dispatch( updateSubjectSettings( subject ) );
+						},
+						onUpdateField( index, field ) {
+							store.dispatch( updateField( index, field ) );
+						},
 						onAdd() {
 							store.dispatch( addDefaultField() )
 						},
@@ -72,7 +94,7 @@ const wpcomContactForm = editor => {
 		onPostRender() {
 			this.innerHtml( renderToStaticMarkup(
 				<button type="button" role="presentation">
-					<Gridicon icon="grid" size={ 18 } />
+					{ this.translate( 'Add Contact Form' ) }
 				</button>
 			) );
 		}

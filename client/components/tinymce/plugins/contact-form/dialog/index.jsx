@@ -2,94 +2,83 @@
  * External dependencies
  */
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 
 /**
  * Internal dependencies
  */
-import Shortcode from 'lib/shortcode';
+import EmptyContent from 'components/empty-content';
 import Dialog from 'components/dialog';
 import SectionNav from 'components/section-nav';
 import SectionNavTabs from 'components/section-nav/tabs';
 import SectionNavTabItem from 'components/section-nav/item';
-import SortableList from 'components/forms/sortable-list';
-import FormFieldset from 'components/forms/form-fieldset';
 import FormButton from 'components/forms/form-button';
+import FormSettings from './settings';
 import Field from './field';
+import { getLabelForTab } from './locales';
 
-/**
- * object constants
- */
-const fieldTypes = {
-	name: 'name',
-	email: 'email',
-	url: 'url',
-	checkbox: 'checkbox',
-	dropdown: 'dropdown',
-	radio: 'radio',
-	text: 'text',
-	textarea: 'textarea',
-	website: 'website'
-};
-
-const defaultForm = [
-	{ label: 'Name', type: fieldTypes.name, required: true },
-	{ label: 'Email', type: fieldTypes.email, required: true },
-	{ label: 'Website', type: fieldTypes.url },
-	{ label: 'Comment', type: fieldTypes.textarea, required: true }
-];
-
-export default React.createClass( {
+const ContactFormDialog = React.createClass( {
 	displayName: 'ContactFormDialog',
 
 	propTypes: {
+		activeTab: PropTypes.oneOf( ['fields', 'settings'] ).isRequired,
+		showDialog: PropTypes.bool.isRequired,
+		contactForm: PropTypes.shape( {
+			to: PropTypes.string,
+			subject: PropTypes.string,
+			fields: PropTypes.array.isRequired
+		} ).isRequired,
+		onChangeTabs: PropTypes.func.isRequired,
+		onUpdateToSettings: PropTypes.func.isRequired,
+		onUpdateSubjectSettings: PropTypes.func.isRequired,
+		onUpdateField: PropTypes.func.isRequired,
+		onAdd: PropTypes.func.isRequired,
+		onRemove: PropTypes.func.isRequired,
 		onClose: PropTypes.func.isRequired,
-		onInsertMedia: PropTypes.func.isRequired,
-		showDialog: PropTypes.bool.isRequired
+		onSave: PropTypes.func.isRequired
 	},
 
-	getInitialState() {
-		return {
-			tokens: Object.freeze( [ 'first item', 'second item' ] )
-		};
+	renderFieldList() {
+		if ( this.props.contactForm.fields.length > 0 ) {
+			return (
+				<div className="editor-contact-form-modal__form-fields">
+					{ this.props.contactForm.fields.map( ( field, index ) => {
+						const { label, type, options, required } = field;
+						return (
+							<Field
+								key={ index }
+								{ ...{ label, type, options, required } }
+								onRemove={ this.props.onRemove.bind( this, index ) }
+								onUpdate={ newField => this.props.onUpdateField( index, newField ) } />
+						);
+					} ) }
+				</div>
+			);
+		}
+
+		return <EmptyContent
+			title={ null }
+			line={ this.translate( 'An empty form is useless. Go ahead and add some fields!' ) }
+			action={ this.translate( 'Add New Field' ) }
+			actionCallback={ this.props.onAdd }
+			isCompact={ true } />
 	},
 
 	render() {
-		const buttons = [
+		const addNewFieldButton = (
 			<div className="editor-contact-form-modal__secondary-actions">
 				<FormButton
 					key="add"
 					isPrimary={ false }
-					onClick={ () => { console.log( 'add new field' ) } } >
+					onClick={ this.props.onAdd } >
 					{ this.translate( 'Add New Field' ) }
 				</FormButton>
-			</div>,
+			</div>
+		);
+		let actionButtons = [
 			<FormButton
 				key="save"
-				onClick={ () => {
-					const fields = defaultForm.map( field => {
-						return Shortcode.stringify( {
-							tag: 'contact-field',
-							type: 'self-closing',
-							attrs: {
-								label: field.label,
-								type: field.type,
-								required: field.required ? 1 : 0
-							}
-						} );
-					} ).join( '' );
-
-					const shortcode = Shortcode.stringify( {
-						tag: 'contact-form',
-						type: 'closed',
-						content: fields,
-						attrs: {
-							to: 'user@example.com',
-							subject: 'this is a contact form'
-						}
-					} );
-
-					this.props.onInsertMedia( shortcode );
-				} } >
+				onClick={ this.props.onSave } >
 				{ this.translate( 'Save' ) }
 			</FormButton>,
 			<FormButton
@@ -100,36 +89,42 @@ export default React.createClass( {
 			</FormButton>
 		];
 
+		if ( this.props.activeTab === 'fields' ) {
+			actionButtons = [ addNewFieldButton, ...actionButtons ];
+		}
+
+		const { contactForm: { to, subject }, onUpdateToSettings, onUpdateSubjectSettings } = this.props;
+		const tabs = [ 'fields', 'settings' ];
+
+		const content = this.props.activeTab === 'fields'
+			? this.renderFieldList()
+			: <FormSettings { ...{ to, subject, onUpdateToSettings, onUpdateSubjectSettings } } />;
+
 		return (
 			<Dialog
 				isVisible={ this.props.showDialog }
 				onClose={ this.props.onClose }
-				buttons={ buttons }
-				additionalClassNames="editor-contact-form-modal"
-			>
+				buttons={ actionButtons }
+				additionalClassNames="editor-contact-form-modal" >
 				<SectionNav selectedText="Form Fields">
 					<SectionNavTabs>
-						<SectionNavTabItem selected={ true }>Form Fields</SectionNavTabItem>
-						<SectionNavTabItem>Settings</SectionNavTabItem>
+						{ tabs.map( tab => (
+							<SectionNavTabItem
+								key={ 'contact-form-' + tab }
+								selected={ this.props.activeTab === tab }
+								count={ tab === 'fields' ? this.props.contactForm.fields.length : null }
+								onClick={ this.props.onChangeTabs.bind( null, tab ) } >
+								{ getLabelForTab( tab ) }
+							</SectionNavTabItem>
+						) ) }
 					</SectionNavTabs>
 				</SectionNav>
-				<div className="editor-contact-form-modal__form-fields">
-					<Field />
-					<Field />
-					<Field />
-					<Field />
-					<Field />
-					<Field />
-					<Field />
-					<Field />
-					<Field />
-					<Field />
-					<Field />
-					<Field />
-					<Field />
-					<Field />
-				</div>
+				{ content }
 			</Dialog>
 		);
 	}
 } );
+
+export default connect( state => {
+	return { contactForm: state.ui.editor.contactForm };
+} )( ContactFormDialog );

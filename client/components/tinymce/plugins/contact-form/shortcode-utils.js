@@ -46,13 +46,18 @@ export function deserialize( shortcode ) {
 	if ( parsed ) {
 		return ( { attrs: { named: { to, subject } = {} } = {}, content } ) => {
 			let fields = [];
-			let field;
+			let parsedField;
 
-			while ( content && ( field = Shortcode.next( 'contact-field', content ) ) ) {
-				if ( 'attrs' in field.shortcode ) {
-					fields.push( field.shortcode.attrs.named );
+			while ( content && ( parsedField = Shortcode.next( 'contact-field', content ) ) ) {
+				if ( 'attrs' in parsedField.shortcode ) {
+					const { label, type, required } = parsedField.shortcode.attrs.named;
+					let field = pick( { label, type, required }, identity );
+					if ( 'required' in field ) {
+						field.required = true;
+					}
+					fields.push( field );
 				}
-				content = content.slice( field.index + field.content.length )
+				content = content.slice( parsedField.index + parsedField.content.length )
 			}
 
 			return pick( { to, subject, fields }, identity );
