@@ -84,14 +84,14 @@ describe( "editor's contact form state reducer", () => {
 			assert.deepEqual( state, { fields: [
 				{ label: 'Name', type: 'name', required: true },
 				{ label: 'Email', type: 'email', required: true },
-				{ label: 'Website', type: 'url' },
+				{ label: 'Website', type: 'website' },
 				{ label: 'Comment', type: 'textarea', required: true },
 				{ label: 'Text', type: 'text' }
 			] } );
 			assert.deepEqual( CONTACT_FORM_DEFAULT, { fields: [
 				{ label: 'Name', type: 'name', required: true },
 				{ label: 'Email', type: 'email', required: true },
-				{ label: 'Website', type: 'url' },
+				{ label: 'Website', type: 'website' },
 				{ label: 'Comment', type: 'textarea', required: true }
 			] } );
 		} );
@@ -147,7 +147,7 @@ describe( "editor's contact form state reducer", () => {
 				fields: [
 					{ label: 'Name', type: CONTACT_FORM_FIELD_TYPES.name, required: true },
 					{ label: 'Email', type: CONTACT_FORM_FIELD_TYPES.email, required: true },
-					{ label: 'Website', type: CONTACT_FORM_FIELD_TYPES.url },
+					{ label: 'Website', type: CONTACT_FORM_FIELD_TYPES.website },
 					{ label: 'Comment', type: CONTACT_FORM_FIELD_TYPES.textarea, required: true }
 				]
 			}, 'contact form default values were mutated.' );
