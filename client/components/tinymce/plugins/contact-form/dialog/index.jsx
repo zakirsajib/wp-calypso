@@ -46,7 +46,7 @@ const ContactFormDialog = React.createClass( {
 						const { label, type, options, required } = field;
 						return (
 							<Field
-								key={ index }
+								key={ index + label }
 								{ ...{ label, type, options, required } }
 								onRemove={ this.props.onRemove.bind( this, index ) }
 								onUpdate={ newField => this.props.onUpdateField( index, newField ) } />
@@ -58,7 +58,7 @@ const ContactFormDialog = React.createClass( {
 
 		return <EmptyContent
 			title={ null }
-			line={ this.translate( 'An empty form is useless. Go ahead and add some fields!' ) }
+			line={ this.translate( 'An empty form is no fun!. Go ahead and add some fields!' ) }
 			action={ this.translate( 'Add New Field' ) }
 			actionCallback={ this.props.onAdd }
 			isCompact={ true } />

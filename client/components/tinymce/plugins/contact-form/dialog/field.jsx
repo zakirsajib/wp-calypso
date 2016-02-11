@@ -3,6 +3,7 @@
  */
 import React, { PropTypes } from 'react';
 import PureRenderMixin from 'react-pure-render/mixin';
+import omit from 'lodash/object/omit';
 
 /**
  * Internal dependencies
@@ -14,7 +15,6 @@ import FormFieldset from 'components/forms/form-fieldset';
 import FormLabel from 'components/forms/form-label';
 import FormTextInput from 'components/forms/form-text-input';
 import FormSettingExplanation from 'components/forms/form-setting-explanation';
-import FormButton from 'components/forms/form-button';
 import FormCheckbox from 'components/forms/form-checkbox';
 import SelectDropdown from 'components/select-dropdown';
 import DropdownItem from 'components/select-dropdown/item';
@@ -30,7 +30,7 @@ export default React.createClass( {
 	propTypes: {
 		label: PropTypes.string.isRequired,
 		type: PropTypes.oneOf( CONTACT_FORM_FIELD_TYPES ).isRequired,
-		options: PropTypes.arrayOf( PropTypes.string ),
+		options: PropTypes.string,
 		required: PropTypes.bool,
 		onUpdate: PropTypes.func.isRequired,
 		onRemove: PropTypes.func.isRequired
@@ -38,12 +38,17 @@ export default React.createClass( {
 
 	renderOptions() {
 		if ( this.props.type === 'radio' || this.props.type === 'dropdown' ) {
+			let { options } = this.props;
+			if ( options && typeof options === 'string' ) {
+				options = options.split( ',' );
+			}
+
 			return (
 				<FormFieldset>
 					<FormLabel>{ this.translate( 'Options' ) }</FormLabel>
 					<TokenField
-						value={ this.props.options }
-						onChange={ tokens => this.props.onUpdate( { options: tokens } ) }/>
+						value={ options || [] }
+						onChange={ tokens => this.props.onUpdate( { options: tokens.join() } ) }/>
 				</FormFieldset>
 			);
 		}
@@ -52,21 +57,21 @@ export default React.createClass( {
 	},
 
 	render() {
-		const remove = <FormButton onClick={ this.props.onRemove }><Gridicon icon="trash" /></FormButton>;
+		const remove = <Gridicon icon="trash" onClick={ this.props.onRemove } className="editor-contact-form-modal__remove" />;
 		return (
 			<FoldableCard
-				header={ <FieldHeader name={ this.props.label } /> }
+				header={ <FieldHeader { ...omit( this.props, [ 'onRemove', 'onUpdate' ] ) } /> }
+				icon={ 'pencil' }
 				summary={ remove }
 				expandedSummary={ remove } >
-
 				<FormFieldset>
-					<FormLabel>{ this.translate( 'Field Name' ) }</FormLabel>
+					<FormLabel>{ this.translate( 'Field Label' ) }</FormLabel>
 					<FormTextInput value={ this.props.label } onChange={ event => this.props.onUpdate( { label: event.target.value } ) } />
 					<FormSettingExplanation>{ this.translate( 'Name of the field as it will appear when you receive an email.' ) }</FormSettingExplanation>
 				</FormFieldset>
 
 				<FormFieldset>
-					<FormLabel>Field Type</FormLabel>
+					<FormLabel>{ this.translate( 'Field Type' ) }</FormLabel>
 					<SelectDropdown selectedText={ getLabelForFieldType( this.props.type ) }>
 						{ CONTACT_FORM_FIELD_TYPES.map( fieldType => (
 							<DropdownItem

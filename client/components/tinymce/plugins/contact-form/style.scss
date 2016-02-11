@@ -52,6 +52,16 @@
 	margin: 10px;
 }
 
+.editor-contact-form-modal__remove {
+	color: lighten( $gray, 20% );
+	cursor: pointer;
+	transition: color 200ms;
+
+	&:hover {
+		color: $orange-fire;
+	}
+}
+
 .editor-contact-form-modal .dialog__action-buttons {
 	position: absolute;
 	right: 0;
@@ -65,4 +75,8 @@
 	display: flex;
 	justify-content: center;
 	height: 40px;
+}
+
+button.foldable-card__action.foldable-card__expand .gridicon.gridicons-pencil {
+	transform: none;
 }

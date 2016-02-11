@@ -43,7 +43,8 @@ export default React.createClass( {
 					<FormFieldset>
 						<FormLabel>{ this.translate( 'Enter your email address' ) }</FormLabel>
 						<FormTextInput value={ this.props.to } onChange={ this.onUpdateToSettings } />
-						<FormSettingExplanation>{ this.translate( 'You can enter multiple email addresses in the Email address field, and separate them with commas. A notification email will then be sent to each email address.' ) }</FormSettingExplanation>
+						<FormSettingExplanation>{ this.translate( 'You can enter multiple email addresses in the Email address field, and separate them with commas.' +
+							' A notification email will then be sent to each email address.' ) }</FormSettingExplanation>
 					</FormFieldset>
 
 					<FormFieldset>
