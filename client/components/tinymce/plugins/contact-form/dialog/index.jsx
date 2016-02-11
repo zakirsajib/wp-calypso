@@ -46,7 +46,7 @@ const ContactFormDialog = React.createClass( {
 						const { label, type, options, required } = field;
 						return (
 							<Field
-								key={ index + label }
+								key={ index }
 								{ ...{ label, type, options, required } }
 								onRemove={ this.props.onRemove.bind( this, index ) }
 								onUpdate={ newField => this.props.onUpdateField( index, newField ) } />
