@@ -19,16 +19,7 @@ export default React.createClass( {
 	propTypes: {
 		to: PropTypes.string,
 		subject: PropTypes.string,
-		onUpdateToSettings: PropTypes.func.isRequired,
-		onUpdateSubjectSettings: PropTypes.func.isRequired
-	},
-
-	onUpdateToSettings( event ) {
-		this.props.onUpdateToSettings( event.target.value );
-	},
-
-	onUpdateSubjectSettings( event ) {
-		this.props.onUpdateSubjectSettings( event.target.value );
+		onUpdateSettings: PropTypes.func.isRequired
 	},
 
 	render() {
@@ -42,14 +33,18 @@ export default React.createClass( {
 
 					<FormFieldset>
 						<FormLabel>{ this.translate( 'Enter your email address' ) }</FormLabel>
-						<FormTextInput value={ this.props.to } onChange={ this.onUpdateToSettings } />
+						<FormTextInput
+							value={ this.props.to }
+							onChange={ event => this.props.onUpdateSettings( { to: event.target.value } ) } />
 						<FormSettingExplanation>{ this.translate( 'You can enter multiple email addresses in the Email address field, and separate them with commas.' +
 							' A notification email will then be sent to each email address.' ) }</FormSettingExplanation>
 					</FormFieldset>
 
 					<FormFieldset>
 						<FormLabel>{ this.translate( 'What should the subject line be?' ) }</FormLabel>
-						<FormTextInput value={ this.props.subject } onChange={ this.onUpdateSubjectSettings } />
+						<FormTextInput
+							value={ this.props.subject }
+							onChange={ event => this.props.onUpdateSettings( { subject: event.target.value } ) } />
 					</FormFieldset>
 				</Card>
 			</div>

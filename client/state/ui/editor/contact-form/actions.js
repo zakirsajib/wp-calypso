@@ -7,8 +7,7 @@ import {
 	EDITOR_CONTACT_FORM_REMOVE_FIELD,
 	EDITOR_CONTACT_FORM_CLEAR_FORM,
 	EDITOR_CONTACT_FORM_UPDATE_FIELD,
-	EDITOR_CONTACT_FORM_UPDATE_SETTINGS_SUBJECT,
-	EDITOR_CONTACT_FORM_UPDATE_SETTINGS_TO
+	EDITOR_CONTACT_FORM_UPDATE_SETTINGS
 } from 'state/action-types';
 
 /**
@@ -42,24 +41,17 @@ export function clearForm() {
 	}
 }
 
-export function updateToSettings( to ) {
-	return {
-		type: EDITOR_CONTACT_FORM_UPDATE_SETTINGS_TO,
-		to
-	}
-}
-
-export function updateSubjectSettings( subject ) {
-	return {
-		type: EDITOR_CONTACT_FORM_UPDATE_SETTINGS_SUBJECT,
-		subject
-	}
-}
-
 export function updateField( index, field ) {
 	return {
 		type: EDITOR_CONTACT_FORM_UPDATE_FIELD,
 		index,
 		field
+	}
+}
+
+export function updateSettings( settings ) {
+	return {
+		type: EDITOR_CONTACT_FORM_UPDATE_SETTINGS,
+		settings
 	}
 }

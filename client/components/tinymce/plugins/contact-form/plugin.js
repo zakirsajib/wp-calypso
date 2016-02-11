@@ -16,9 +16,8 @@ import {
 	addDefaultField,
 	removeField,
 	clearForm,
-	updateToSettings,
-	updateSubjectSettings,
-	updateField
+	updateField,
+	updateSettings
 } from 'state/ui/editor/contact-form/actions';
 import { serialize, deserialize } from './shortcode-utils';
 
@@ -54,12 +53,6 @@ const wpcomContactForm = editor => {
 						onChangeTabs( tab ) {
 							renderModal( 'show', tab );
 						},
-						onUpdateToSettings( to ) {
-							store.dispatch( updateToSettings( to ) );
-						},
-						onUpdateSubjectSettings( subject ) {
-							store.dispatch( updateSubjectSettings( subject ) );
-						},
 						onAddNewField() {
 							store.dispatch( addDefaultField() )
 						},
@@ -68,6 +61,9 @@ const wpcomContactForm = editor => {
 						},
 						onRemoveField( index ) {
 							store.dispatch( removeField( index ) );
+						},
+						onUpdateSettings( settings ) {
+							store.dispatch( updateSettings( settings ) );
 						},
 						onClose() {
 							store.dispatch( clearForm() );

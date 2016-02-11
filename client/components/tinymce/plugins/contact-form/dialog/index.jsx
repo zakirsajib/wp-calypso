@@ -25,11 +25,10 @@ const ContactFormDialog = React.createClass( {
 			fields: PropTypes.array.isRequired
 		} ).isRequired,
 		onChangeTabs: PropTypes.func.isRequired,
-		onUpdateToSettings: PropTypes.func.isRequired,
-		onUpdateSubjectSettings: PropTypes.func.isRequired,
 		onUpdateField: PropTypes.func.isRequired,
 		onAddNewField: PropTypes.func.isRequired,
 		onRemoveField: PropTypes.func.isRequired,
+		onUpdateSettings: PropTypes.func.isRequired,
 		onSave: PropTypes.func.isRequired,
 		onClose: PropTypes.func.isRequired
 	},
@@ -71,16 +70,15 @@ const ContactFormDialog = React.createClass( {
 			activeTab,
 			contactForm: { to, subject, fields },
 			onChangeTabs,
-			onUpdateToSettings,
-			onUpdateSubjectSettings,
 			onAddNewField,
+			onRemoveField,
 			onUpdateField,
-			onRemoveField
+			onUpdateSettings
 		} = this.props;
 
 		const content = this.props.activeTab === 'fields'
 			? <FieldList { ...{ fields, onAddNewField, onRemoveField, onUpdateField } } />
-			: <FormSettings { ...{ to, subject, onUpdateToSettings, onUpdateSubjectSettings } } />;
+			: <FormSettings { ...{ to, subject, onUpdateSettings } } />;
 
 		return (
 			<Dialog

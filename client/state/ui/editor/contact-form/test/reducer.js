@@ -12,7 +12,9 @@ import {
 	EDITOR_CONTACT_FORM_LOAD_FORM,
 	EDITOR_CONTACT_FORM_ADD_DEFAULT_FIELD,
 	EDITOR_CONTACT_FORM_REMOVE_FIELD,
-	EDITOR_CONTACT_FORM_CLEAR_FORM
+	EDITOR_CONTACT_FORM_CLEAR_FORM,
+	EDITOR_CONTACT_FORM_UPDATE_FIELD,
+	EDITOR_CONTACT_FORM_UPDATE_SETTINGS
 } from 'state/action-types';
 
 describe( "editor's contact form state reducer", () => {
@@ -169,6 +171,124 @@ describe( "editor's contact form state reducer", () => {
 			assert.deepEqual( state, CONTACT_FORM_DEFAULT );
 			assert.notStrictEqual( state, CONTACT_FORM_DEFAULT, 'the returned state and the default contact form are strictly equal.' );
 			assert.notStrictEqual( state.fields, CONTACT_FORM_DEFAULT.fields, 'the fields on the returned state and the default contact form are strictly equal.' );
+		} );
+	} );
+
+	describe( 'update field', () => {
+		it( 'should update a field by index', () => {
+			const contactForm = {
+				fields: [
+					{ label: 'Name' },
+					{ label: 'Email' },
+					{ label: 'Website' },
+					{ label: 'Comment' }
+				]
+			};
+
+			const state = reducer( contactForm, {
+				type: EDITOR_CONTACT_FORM_UPDATE_FIELD,
+				index: 2,
+				field: { label: 'Web Address', type: 'website', required: true }
+			} );
+
+			assert.deepEqual( state, {
+				fields: [
+					{ label: 'Name' },
+					{ label: 'Email' },
+					{ label: 'Web Address', type: 'website', required: true },
+					{ label: 'Comment' }
+				]
+			} );
+			assert.deepEqual( contactForm, {
+				fields: [
+					{ label: 'Name' },
+					{ label: 'Email' },
+					{ label: 'Website' },
+					{ label: 'Comment' }
+				]
+			} );
+		} );
+	} );
+
+	describe( 'update settings', () => {
+		it( 'should update the form destination address', () => {
+			const contactForm = {
+				to: 'user@example.com',
+				subject: 'here be dragons',
+				fields: [
+					{ label: 'Name' },
+					{ label: 'Email' },
+					{ label: 'Website' },
+					{ label: 'Comment' }
+				]
+			};
+
+			const state = reducer( contactForm, {
+				type: EDITOR_CONTACT_FORM_UPDATE_SETTINGS,
+				settings: { to: 'someone@example.com' }
+			} );
+
+			assert.deepEqual( state, {
+				to: 'someone@example.com',
+				subject: 'here be dragons',
+				fields: [
+					{ label: 'Name' },
+					{ label: 'Email' },
+					{ label: 'Website' },
+					{ label: 'Comment' }
+				]
+			} );
+			assert.deepEqual( contactForm, {
+				to: 'user@example.com',
+				subject: 'here be dragons',
+				fields: [
+					{ label: 'Name' },
+					{ label: 'Email' },
+					{ label: 'Website' },
+					{ label: 'Comment' }
+				]
+			}, 'the provided contact form was mutated by the reducer' );
+			assert.notStrictEqual( contactForm.fields, state.fields, 'the fields on the returned state and the provided contact form are strictly equal.' );
+		} );
+
+		it( 'should update the form subject line', () => {
+			const contactForm = {
+				to: 'user@example.com',
+				subject: 'here be dragons',
+				fields: [
+					{ label: 'Name' },
+					{ label: 'Email' },
+					{ label: 'Website' },
+					{ label: 'Comment' }
+				]
+			};
+
+			const state = reducer( contactForm, {
+				type: EDITOR_CONTACT_FORM_UPDATE_SETTINGS,
+				settings: { subject: 'to boldly go' }
+			} );
+
+			assert.deepEqual( state, {
+				to: 'user@example.com',
+				subject: 'to boldly go',
+				fields: [
+					{ label: 'Name' },
+					{ label: 'Email' },
+					{ label: 'Website' },
+					{ label: 'Comment' }
+				]
+			} );
+			assert.deepEqual( contactForm, {
+				to: 'user@example.com',
+				subject: 'here be dragons',
+				fields: [
+					{ label: 'Name' },
+					{ label: 'Email' },
+					{ label: 'Website' },
+					{ label: 'Comment' }
+				]
+			}, 'the provided contact form was mutated by the reducer' );
+			assert.notStrictEqual( contactForm.fields, state.fields, 'the fields on the returned state and the provided contact form are strictly equal.' );
 		} );
 	} );
 } );
