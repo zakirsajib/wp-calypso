@@ -199,6 +199,11 @@
 	}
 }
 
+.mce-toolbar .mce-wpcom-button.mce-contact-form button{
+	font-family: $sans;
+}
+
+
 .mce-toolbar .mce-wpcom-button.mce-media span {
 	font-family: $sans;
 	color: darken( $gray, 20% );
