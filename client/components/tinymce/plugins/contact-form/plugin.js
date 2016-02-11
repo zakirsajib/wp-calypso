@@ -60,13 +60,13 @@ const wpcomContactForm = editor => {
 						onUpdateSubjectSettings( subject ) {
 							store.dispatch( updateSubjectSettings( subject ) );
 						},
+						onAddNewField() {
+							store.dispatch( addDefaultField() )
+						},
 						onUpdateField( index, field ) {
 							store.dispatch( updateField( index, field ) );
 						},
-						onAdd() {
-							store.dispatch( addDefaultField() )
-						},
-						onRemove( index ) {
+						onRemoveField( index ) {
 							store.dispatch( removeField( index ) );
 						},
 						onClose() {

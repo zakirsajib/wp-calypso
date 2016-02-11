@@ -7,15 +7,11 @@ import { connect } from 'react-redux';
 /**
  * Internal dependencies
  */
-import EmptyContent from 'components/empty-content';
 import Dialog from 'components/dialog';
-import SectionNav from 'components/section-nav';
-import SectionNavTabs from 'components/section-nav/tabs';
-import SectionNavTabItem from 'components/section-nav/item';
 import FormButton from 'components/forms/form-button';
 import FormSettings from './settings';
-import Field from './field';
-import { getLabelForTab } from './locales';
+import Navigation from './navigation';
+import FieldList from './field-list';
 
 const ContactFormDialog = React.createClass( {
 	displayName: 'ContactFormDialog',
@@ -32,50 +28,14 @@ const ContactFormDialog = React.createClass( {
 		onUpdateToSettings: PropTypes.func.isRequired,
 		onUpdateSubjectSettings: PropTypes.func.isRequired,
 		onUpdateField: PropTypes.func.isRequired,
-		onAdd: PropTypes.func.isRequired,
-		onRemove: PropTypes.func.isRequired,
-		onClose: PropTypes.func.isRequired,
-		onSave: PropTypes.func.isRequired
+		onAddNewField: PropTypes.func.isRequired,
+		onRemoveField: PropTypes.func.isRequired,
+		onSave: PropTypes.func.isRequired,
+		onClose: PropTypes.func.isRequired
 	},
 
-	renderFieldList() {
-		if ( this.props.contactForm.fields.length > 0 ) {
-			return (
-				<div className="editor-contact-form-modal__form-fields">
-					{ this.props.contactForm.fields.map( ( field, index ) => {
-						const { label, type, options, required } = field;
-						return (
-							<Field
-								key={ index }
-								{ ...{ label, type, options, required } }
-								onRemove={ this.props.onRemove.bind( this, index ) }
-								onUpdate={ newField => this.props.onUpdateField( index, newField ) } />
-						);
-					} ) }
-				</div>
-			);
-		}
-
-		return <EmptyContent
-			title={ null }
-			line={ this.translate( 'An empty form is no fun!. Go ahead and add some fields!' ) }
-			action={ this.translate( 'Add New Field' ) }
-			actionCallback={ this.props.onAdd }
-			isCompact={ true } />
-	},
-
-	render() {
-		const addNewFieldButton = (
-			<div className="editor-contact-form-modal__secondary-actions">
-				<FormButton
-					key="add"
-					isPrimary={ false }
-					onClick={ this.props.onAdd } >
-					{ this.translate( 'Add New Field' ) }
-				</FormButton>
-			</div>
-		);
-		let actionButtons = [
+	getActionButtons() {
+		const actionButtons = [
 			<FormButton
 				key="save"
 				onClick={ this.props.onSave } >
@@ -90,35 +50,45 @@ const ContactFormDialog = React.createClass( {
 		];
 
 		if ( this.props.activeTab === 'fields' ) {
-			actionButtons = [ addNewFieldButton, ...actionButtons ];
+			return [
+				<div className="editor-contact-form-modal__secondary-actions">
+					<FormButton
+						key="add"
+						isPrimary={ false }
+						onClick={ this.props.onAddNewField } >
+						{ this.translate( 'Add New Field' ) }
+					</FormButton>
+				</div>,
+				...actionButtons
+			];
 		}
 
-		const { contactForm: { to, subject }, onUpdateToSettings, onUpdateSubjectSettings } = this.props;
-		const tabs = [ 'fields', 'settings' ];
+		return actionButtons;
+	},
+
+	render() {
+		const {
+			activeTab,
+			contactForm: { to, subject, fields },
+			onChangeTabs,
+			onUpdateToSettings,
+			onUpdateSubjectSettings,
+			onAddNewField,
+			onUpdateField,
+			onRemoveField
+		} = this.props;
 
 		const content = this.props.activeTab === 'fields'
-			? this.renderFieldList()
+			? <FieldList { ...{ fields, onAddNewField, onRemoveField, onUpdateField } } />
 			: <FormSettings { ...{ to, subject, onUpdateToSettings, onUpdateSubjectSettings } } />;
 
 		return (
 			<Dialog
 				isVisible={ this.props.showDialog }
 				onClose={ this.props.onClose }
-				buttons={ actionButtons }
+				buttons={ this.getActionButtons() }
 				additionalClassNames="editor-contact-form-modal" >
-				<SectionNav selectedText="Form Fields">
-					<SectionNavTabs>
-						{ tabs.map( tab => (
-							<SectionNavTabItem
-								key={ 'contact-form-' + tab }
-								selected={ this.props.activeTab === tab }
-								count={ tab === 'fields' ? this.props.contactForm.fields.length : null }
-								onClick={ this.props.onChangeTabs.bind( null, tab ) } >
-								{ getLabelForTab( tab ) }
-							</SectionNavTabItem>
-						) ) }
-					</SectionNavTabs>
-				</SectionNav>
+				<Navigation { ...{ activeTab, onChangeTabs, fieldCount: fields.length } } />
 				{ content }
 			</Dialog>
 		);
