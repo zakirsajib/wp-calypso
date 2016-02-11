@@ -54,12 +54,14 @@ const SupportUserLoginDialog = React.createClass( {
 				isVisible={ isVisible }
 				onClose={ onCloseDialog }
 				buttons={ buttons }
+				autoFocus={ false }
 				additionalClassNames="support-user__login-dialog">
 				<h2 className="support-user__heading">Support user</h2>
 				<FormFieldset>
 					<FormLabel>
 						<span>Username</span>
 						<FormTextInput
+							autoFocus={ true }
 							name="supportUser"
 							id="supportUser"
 							valueLink={ this.linkState( 'supportUser' ) } />
