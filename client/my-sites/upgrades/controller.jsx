@@ -260,7 +260,14 @@ module.exports = {
 			// TODO: When this section is migrated to Redux altogether,
 			// use react-redux to `connect()` components and `dispatch()` actions.
 			context.store.dispatch( activated( meta, selectedSite, source, true ) );
-			page.redirect( '/design/' + selectedSite.slug );
+
+			// If we're coming from the signup funnel, redirect to the frontend
+			if ( source === 'signup-with-theme' ) {
+				page.redirect( selectedSite.URL );
+			} else {
+				page.redirect( '/design/' + selectedSite.slug );
+			}
+
 			return;
 		}
 
