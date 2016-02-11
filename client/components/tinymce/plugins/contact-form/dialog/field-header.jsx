@@ -7,14 +7,13 @@ import React, { PropTypes } from 'react';
  * Internal dependencies
  */
 import { getLabelForFieldType } from './locales';
-import { CONTACT_FORM_FIELD_TYPES } from './constants';
 
 export default React.createClass( {
 	displayName: 'ContactFormDialogFieldHeader',
 
 	propTypes: {
 		label: PropTypes.string.isRequired,
-		type: PropTypes.oneOf( CONTACT_FORM_FIELD_TYPES ).isRequired,
+		type: PropTypes.string.isRequired,
 		options: PropTypes.string,
 		required: PropTypes.bool,
 	},

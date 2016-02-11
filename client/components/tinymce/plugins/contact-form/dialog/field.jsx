@@ -19,7 +19,6 @@ import FormCheckbox from 'components/forms/form-checkbox';
 import SelectDropdown from 'components/select-dropdown';
 import DropdownItem from 'components/select-dropdown/item';
 import TokenField from 'components/token-field';
-import { CONTACT_FORM_FIELD_TYPES } from './constants';
 import { getLabelForFieldType } from './locales';
 
 export default React.createClass( {
@@ -29,7 +28,7 @@ export default React.createClass( {
 
 	propTypes: {
 		label: PropTypes.string.isRequired,
-		type: PropTypes.oneOf( CONTACT_FORM_FIELD_TYPES ).isRequired,
+		type: PropTypes.string.isRequired,
 		options: PropTypes.string,
 		required: PropTypes.bool,
 		onUpdate: PropTypes.func.isRequired,
@@ -57,6 +56,7 @@ export default React.createClass( {
 	},
 
 	render() {
+		const fieldTypes = [ 'name', 'email', 'checkbox', 'dropdown', 'radio', 'text', 'textarea', 'website' ];
 		const remove = <Gridicon icon="trash" onClick={ this.props.onRemove } className="editor-contact-form-modal__remove" />;
 		return (
 			<FoldableCard
@@ -73,7 +73,7 @@ export default React.createClass( {
 				<FormFieldset>
 					<FormLabel>{ this.translate( 'Field Type' ) }</FormLabel>
 					<SelectDropdown selectedText={ getLabelForFieldType( this.props.type ) }>
-						{ CONTACT_FORM_FIELD_TYPES.map( fieldType => (
+						{ fieldTypes.map( fieldType => (
 							<DropdownItem
 								key={ 'field-type-' + fieldType }
 								selected={ this.props.type === fieldType }
