@@ -36,6 +36,7 @@ const SupportUserLoginDialog = React.createClass( {
 		const buttons = [
 			<FormButton
 				key="supportuser"
+				type="submit"
 				disabled={ isBusy }
 				onClick={ this.onChangeUser }>
 					{ isBusy ? 'Switching...' : 'Change user' }
@@ -54,6 +55,7 @@ const SupportUserLoginDialog = React.createClass( {
 				isVisible={ isVisible }
 				onClose={ onCloseDialog }
 				buttons={ buttons }
+				contentTagName="form"
 				additionalClassNames="support-user__login-dialog">
 				<h2 className="support-user__heading">Support user</h2>
 				<FormFieldset>
