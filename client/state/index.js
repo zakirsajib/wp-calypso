@@ -20,6 +20,7 @@ import users from './users/reducer';
 import currentUser from './current-user/reducer';
 import ui from './ui/reducer';
 import offlineQueue from './offlineActionQueue/middleware';
+import connectionMiddleware from './offlineActionQueue/reducer';
 
 /**
  * Module variables
@@ -36,7 +37,8 @@ export const reducer = combineReducers( {
 	themes,
 	users,
 	currentUser,
-	ui
+	ui,
+	connectionMiddleware
 } );
 
 let middleware = [ thunkMiddleware ];
