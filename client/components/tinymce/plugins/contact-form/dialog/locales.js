@@ -14,12 +14,3 @@ export const typesLabels = {
 export const getLabelForFieldType = fieldType => fieldType in typesLabels
 	? typesLabels[fieldType].call()
 	: null;
-
-export const tabLabels = {
-	fields: () => i18n.translate( 'Form Fields' ),
-	settings: () => i18n.translate( 'Settings' )
-}
-
-export const getLabelForTab = tab => tab in tabLabels
-	? tabLabels[tab].call()
-	: null;

@@ -9,7 +9,6 @@ import React, { PropTypes } from 'react';
 import SectionNav from 'components/section-nav';
 import SectionNavTabs from 'components/section-nav/tabs';
 import SectionNavTabItem from 'components/section-nav/item';
-import { getLabelForTab } from './locales';
 
 export default React.createClass( {
 	displayName: 'ContactFormDialogNavigation',
@@ -32,7 +31,7 @@ export default React.createClass( {
 							selected={ this.props.activeTab === tab }
 							count={ tab === 'fields' ? this.props.fieldCount : null }
 							onClick={ () => this.props.onChangeTabs( tab ) } >
-							{ getLabelForTab( tab ) }
+							{ tab === 'fields' ? this.translate( 'Form Fields' ) : this.translate( 'Settings' ) }
 						</SectionNavTabItem>
 					) ) }
 				</SectionNavTabs>
