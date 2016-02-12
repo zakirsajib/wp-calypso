@@ -18,7 +18,7 @@ import FormCheckbox from 'components/forms/form-checkbox';
 import SelectDropdown from 'components/select-dropdown';
 import DropdownItem from 'components/select-dropdown/item';
 import TokenField from 'components/token-field';
-import { getLabelForFieldType } from './locales';
+import getLabel from './locales';
 
 export default React.createClass( {
 	displayName: 'ContactFormDialogField',
@@ -71,13 +71,13 @@ export default React.createClass( {
 
 				<FormFieldset>
 					<FormLabel>{ this.translate( 'Field Type' ) }</FormLabel>
-					<SelectDropdown selectedText={ getLabelForFieldType( this.props.type ) }>
+					<SelectDropdown selectedText={ getLabel( this.props.type ) }>
 						{ fieldTypes.map( fieldType => (
 							<DropdownItem
 								key={ 'field-type-' + fieldType }
 								selected={ this.props.type === fieldType }
 								onClick={ () => this.props.onUpdate( { type: fieldType } ) }>
-								{ getLabelForFieldType( fieldType ) }
+								{ getLabel( fieldType ) }
 							</DropdownItem>
 						) ) }
 					</SelectDropdown>

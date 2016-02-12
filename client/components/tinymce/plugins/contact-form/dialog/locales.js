@@ -1,6 +1,6 @@
 import i18n from 'lib/mixins/i18n'
 
-export const typesLabels = {
+const labels = {
 	name: () => i18n.translate( 'Name' ),
 	email: () => i18n.translate( 'Email Address' ),
 	checkbox: () => i18n.translate( 'Checkbox' ),
@@ -11,6 +11,8 @@ export const typesLabels = {
 	url: () => i18n.translate( 'Web Address' )
 }
 
-export const getLabelForFieldType = fieldType => fieldType in typesLabels
-	? typesLabels[fieldType].call()
-	: null;
+export default function ( type ) {
+	return type in labels
+		? labels[type].call()
+		: null;
+}

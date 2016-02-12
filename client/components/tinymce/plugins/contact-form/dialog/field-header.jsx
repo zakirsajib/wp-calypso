@@ -6,7 +6,7 @@ import React, { PropTypes } from 'react';
 /**
  * Internal dependencies
  */
-import { getLabelForFieldType } from './locales';
+import getLabel from './locales';
 
 export default React.createClass( {
 	displayName: 'ContactFormDialogFieldHeader',
@@ -28,7 +28,7 @@ export default React.createClass( {
 					count,
 					args: {
 						required: this.props.required ? this.translate( 'Required' ) : this.translate( 'Optional' ),
-						type: getLabelForFieldType( this.props.type ),
+						type: getLabel( this.props.type ),
 						numOption: count
 					}
 				} );
@@ -37,7 +37,7 @@ export default React.createClass( {
 		return this.translate( '%(required)s %(type)s', {
 			args: {
 				required: this.props.required ? this.translate( 'Required' ) : this.translate( 'Optional' ),
-				type: getLabelForFieldType( this.props.type )
+				type: getLabel( this.props.type )
 			}
 		} );
 	},
