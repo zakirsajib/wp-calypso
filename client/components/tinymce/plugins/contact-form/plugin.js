@@ -10,6 +10,7 @@ import { Provider } from 'react-redux';
 /**
  * Internal Dependencies
  */
+import Gridicon from 'components/gridicon';
 import ContactFormDialog from './dialog';
 import {
 	loadForm,
@@ -90,7 +91,7 @@ const wpcomContactForm = editor => {
 		onPostRender() {
 			this.innerHtml( renderToStaticMarkup(
 				<button type="button" role="presentation">
-					{ this.translate( 'Add Contact Form' ) }
+					<Gridicon icon="mention" />
 				</button>
 			) );
 		}
