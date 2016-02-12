@@ -24,7 +24,7 @@ export default React.createClass( {
 
 	render() {
 		return (
-			<div className="editor-contact-form-modal__form-settings">
+			<div className="editor-contact-form-modal-settings">
 				<SectionHeader label={ this.translate( 'Contact Form Notification Settings' ) } />
 				<Card>
 					<p>

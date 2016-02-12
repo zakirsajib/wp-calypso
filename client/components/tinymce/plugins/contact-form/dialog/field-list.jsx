@@ -22,7 +22,7 @@ export default React.createClass( {
 	render() {
 		if ( this.props.fields.length > 0 ) {
 			return (
-				<div className="editor-contact-form-modal__form-fields">
+				<div className="editor-contact-form-modal-fields">
 					{ this.props.fields.map( ( field, index ) => {
 						const { label, type, options, required } = field;
 						return (

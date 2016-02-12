@@ -8,19 +8,14 @@
 	bottom: 0;
 	left: 0;
 	right: 0;
+	max-width: 100%;
 
 	@include breakpoint( ">660px" ) {
 		top: 5%;
 		bottom: 5%;
-		left: 5%;
-		right: 5%;
-		width: 90%;
-	}
-
-	@include breakpoint( ">960px" ) {
-		left: 25%;
-		right: 25%;
-		width: 50%;
+		left: 50%;
+		margin-left: -275px;
+		width: 550px;
 	}
 }
 
@@ -56,8 +51,8 @@ button.foldable-card__action.foldable-card__expand .gridicon.gridicons-pencil {
 	transform: none;
 }
 
-.editor-contact-form-modal__form-fields,
-.editor-contact-form-modal__form-settings {
+.editor-contact-form-modal-fields,
+.editor-contact-form-modal-settings {
 	padding: 5px 20px;
 	top: 65px;
 	bottom: 74px;
@@ -67,11 +62,7 @@ button.foldable-card__action.foldable-card__expand .gridicon.gridicons-pencil {
 	position: absolute;
 }
 
-.editor-contact-form-modal__form-fields {
-	margin: 10px;
-}
-
-.editor-contact-form-modal__remove {
+.editor-contact-form-modal-field__remove {
 	color: lighten( $gray, 20% );
 	cursor: pointer;
 	transition: color 200ms;

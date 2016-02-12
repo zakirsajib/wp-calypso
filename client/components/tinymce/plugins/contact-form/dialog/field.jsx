@@ -56,7 +56,8 @@ export default React.createClass( {
 
 	render() {
 		const fieldTypes = [ 'name', 'email', 'checkbox', 'dropdown', 'radio', 'text', 'textarea', 'website' ];
-		const remove = <Gridicon icon="trash" onClick={ this.props.onRemove } className="editor-contact-form-modal__remove" />;
+		const remove = <Gridicon icon="trash" onClick={ this.props.onRemove } className="editor-contact-form-modal-field__remove" />;
+
 		return (
 			<FoldableCard
 				header={ <FieldHeader { ...omit( this.props, [ 'onRemove', 'onUpdate' ] ) } /> }
@@ -86,7 +87,7 @@ export default React.createClass( {
 					<FormLabel>
 						<FormCheckbox
 							checked={ this.props.required }
-							onChange={ () => this.props.onUpdate( { required: !this.props.required } ) } />
+							onChange={ () => this.props.onUpdate( { required: ! this.props.required } ) } />
 						{ this.translate( 'Required' ) }
 					</FormLabel>
 				</FormFieldset>
