@@ -14,7 +14,6 @@ import FoldableCard from 'components/foldable-card';
 import FormFieldset from 'components/forms/form-fieldset';
 import FormLabel from 'components/forms/form-label';
 import FormTextInput from 'components/forms/form-text-input';
-import FormSettingExplanation from 'components/forms/form-setting-explanation';
 import FormCheckbox from 'components/forms/form-checkbox';
 import SelectDropdown from 'components/select-dropdown';
 import DropdownItem from 'components/select-dropdown/item';
@@ -67,7 +66,6 @@ export default React.createClass( {
 				<FormFieldset>
 					<FormLabel>{ this.translate( 'Field Label' ) }</FormLabel>
 					<FormTextInput value={ this.props.label } onChange={ event => this.props.onUpdate( { label: event.target.value } ) } />
-					<FormSettingExplanation>{ this.translate( 'Name of the field as it will appear when you receive an email.' ) }</FormSettingExplanation>
 				</FormFieldset>
 
 				<FormFieldset>
