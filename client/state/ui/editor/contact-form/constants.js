@@ -2,11 +2,11 @@ export const CONTACT_FORM_FIELD_TYPES = {
 	name: 'name',
 	email: 'email',
 	checkbox: 'checkbox',
-	dropdown: 'dropdown',
+	dropdown: 'select',
 	radio: 'radio',
 	text: 'text',
 	textarea: 'textarea',
-	website: 'website'
+	website: 'url'
 };
 
 export const CONTACT_FORM_DEFAULT = {

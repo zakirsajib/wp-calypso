@@ -86,14 +86,14 @@ describe( "editor's contact form state reducer", () => {
 			assert.deepEqual( state, { fields: [
 				{ label: 'Name', type: 'name', required: true },
 				{ label: 'Email', type: 'email', required: true },
-				{ label: 'Website', type: 'website' },
+				{ label: 'Website', type: 'url' },
 				{ label: 'Comment', type: 'textarea', required: true },
 				{ label: 'Text', type: 'text' }
 			] } );
 			assert.deepEqual( CONTACT_FORM_DEFAULT, { fields: [
 				{ label: 'Name', type: 'name', required: true },
 				{ label: 'Email', type: 'email', required: true },
-				{ label: 'Website', type: 'website' },
+				{ label: 'Website', type: 'url' },
 				{ label: 'Comment', type: 'textarea', required: true }
 			] } );
 		} );
@@ -188,14 +188,14 @@ describe( "editor's contact form state reducer", () => {
 			const state = reducer( contactForm, {
 				type: EDITOR_CONTACT_FORM_UPDATE_FIELD,
 				index: 2,
-				field: { label: 'Web Address', type: 'website', required: true }
+				field: { label: 'Web Address', type: 'url', required: true }
 			} );
 
 			assert.deepEqual( state, {
 				fields: [
 					{ label: 'Name' },
 					{ label: 'Email' },
-					{ label: 'Web Address', type: 'website', required: true },
+					{ label: 'Web Address', type: 'url', required: true },
 					{ label: 'Comment' }
 				]
 			} );

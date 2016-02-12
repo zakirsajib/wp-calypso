@@ -35,7 +35,7 @@ export default React.createClass( {
 	},
 
 	renderOptions() {
-		if ( this.props.type === 'radio' || this.props.type === 'dropdown' ) {
+		if ( this.props.type === 'radio' || this.props.type === 'select' ) {
 			let { options } = this.props;
 			if ( options && typeof options === 'string' ) {
 				options = options.split( ',' );
@@ -55,7 +55,7 @@ export default React.createClass( {
 	},
 
 	render() {
-		const fieldTypes = [ 'name', 'email', 'checkbox', 'dropdown', 'radio', 'text', 'textarea', 'website' ];
+		const fieldTypes = [ 'name', 'email', 'checkbox', 'select', 'radio', 'text', 'textarea', 'url' ];
 		const remove = <Gridicon icon="trash" onClick={ this.props.onRemove } className="editor-contact-form-modal-field__remove" />;
 
 		return (
