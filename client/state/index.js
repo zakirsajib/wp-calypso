@@ -38,7 +38,7 @@ export const reducer = combineReducers( {
 	users,
 	currentUser,
 	ui,
-	connectionMiddlewareReducer
+	connectionMiddleware: connectionMiddlewareReducer
 } );
 
 let middleware = [ thunkMiddleware ];
