@@ -31,7 +31,7 @@
 
 	&.is-selected {
 		+ .segmented-control__item .segmented-control__link {
-			border-left-color: $blue-medium;
+			border-left-color: $gray-dark;
 		}
 	}
 }
@@ -43,30 +43,31 @@
 	border-right: none;
 	font-size: 14px;
 	line-height: 18px;
-	color: $gray-dark;
+	color: $gray;
 	text-align: center;
 
 	&:focus {
-		color: $gray;
+		color: $gray-dark;
 		outline: none;
 
 		.keyboard-navigation & .segmented-control__text {
-			outline: dotted 1px $gray;
+			outline: dotted 1px $gray-dark;
 		}
 	}
 
 	.notouch & {
 		&:hover {
-			color: $gray;
+			color: $gray-dark;
 		}
 	}
 
 	.segmented-control__item.is-selected & {
-		border-color: $blue-medium;
-		background-color: $blue-medium;
-		color: $white;
+		border-color: $gray-dark;
+		color: $gray-dark;
 	}
 }
+
+
 
 .segmented-control__text {
 	display: block;
@@ -81,5 +82,25 @@
 	.segmented-control__link {
 		font-size: 13px;
 		padding: 4px 8px;
+	}
+}
+
+//Primary variation
+.segmented-control.is-primary {
+
+	.segmented-control__item {
+
+		&.is-selected {
+
+			.segmented-control__link {
+		  	border-color: $blue-medium;
+		 		background-color: $blue-medium;
+		 		color: $white;
+		  }
+
+			+ .segmented-control__item .segmented-control__link {
+				border-left-color: $blue-medium;
+			}
+		}
 	}
 }
