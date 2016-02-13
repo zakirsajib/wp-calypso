@@ -230,7 +230,7 @@ module.exports = React.createClass( {
 			return null;
 		}
 
-		if ( ! this.props.sites.hasSiteWithPlugins() && ! this.isSingle() ) {
+		if ( ! this.props.sites.hasSiteWithPlugins() ) {
 			return null;
 		}
 
