@@ -48,7 +48,8 @@ describe( 'Domains assembler', () => {
 			registrationDate: undefined,
 			registrationMoment: undefined,
 			transferProhibited: undefined,
-			type: domainTypes.SITE_REDIRECT
+			type: domainTypes.SITE_REDIRECT,
+			hasZone: undefined
 		},
 		mappedDomainObject = assign( {}, redirectDomainObject, {
 			type: domainTypes.MAPPED
