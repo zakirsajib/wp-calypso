@@ -116,21 +116,21 @@ module.exports = React.createClass( {
 		);
 	},
 
-	getDomainExpirationNotices: function() {
+	getDomainWarnings: function() {
 		let domainStore = this.state.domainsStore.getBySite( this.getSelectedSite().ID ),
 			domains = domainStore && domainStore.list || [];
 		return (
 			<DomainWarnings
 				selectedSite={ this.getSelectedSite() }
 				domains={ domains }
-				ruleWhiteList={ [ 'expiredDomains', 'expiringDomains' ] } />
+				ruleWhiteList={ [ 'expiredDomains', 'expiringDomains', 'wrongNSMappedDomains' ] } />
 		);
 	},
 
 	getSiteNotices: function( site ) {
 		return (
 			<div>
-				{ this.getDomainExpirationNotices() }
+				{ this.getDomainWarnings() }
 				{ this.getSiteRedirectNotice( site ) }
 			</div>
 		);
@@ -192,7 +192,7 @@ module.exports = React.createClass( {
 					? this.addNewWordPressButton()
 					: <span className="current-site__switch-sites">
 						<Button compact borderless onClick={ this.switchSites }>
-							<Gridicon icon="arrow-left" size={ 16 } />
+							<Gridicon icon="arrow-left" size={ 18 } />
 							{ this.translate( 'Switch Site' ) }
 						</Button>
 					</span>
