@@ -36,7 +36,7 @@ export default React.createClass( {
 	},
 
 	getPipe() {
-		let allRules = [ this.expiredDomains, this.expiringDomains, this.newDomainsWithPrimary, this.newDomains ],
+		let allRules = [ this.expiredDomains, this.expiringDomains, this.wrongNSMappedDomains, this.newDomainsWithPrimary, this.newDomains ],
 			rules;
 		if ( ! this.props.ruleWhiteList ) {
 			rules = allRules;
@@ -49,6 +49,31 @@ export default React.createClass( {
 
 	getDomains() {
 		return this.props.domains || [ this.props.domain ]
+	},
+
+	wrongNSMappedDomains() {
+		debug( 'Rendering wrongNSMappedDomains' );
+		const wrongMappedDomains = this.getDomains().filter( domain =>
+			domain.type === domainTypes.MAPPED && ! domain.hasZone );
+
+		let learnMoreLink = ( <a
+			href="https://support.wordpress.com/domains/change-name-servers"
+			target="_blank">{ this.translate( 'Learn more.' ) }</a> ),
+			text;
+
+		if ( wrongMappedDomains.length === 0 ) {
+			return null;
+		} else if ( wrongMappedDomains.length === 1 ) {
+			text = this.translate( '%(domainName)s\'s name server records should be configured', {
+				args: { domainName: wrongMappedDomains[0].name },
+				context: 'Mapped domain notice with NS records pointing to somewhere else'
+			} );
+		} else {
+			text = this.translate( 'Some of your domains\' name server records should be configured', {
+				context: 'Mapped domain notice with NS records pointing to somewhere else'
+			} );
+		}
+		return <Notice status="is-error" showDismiss={ false }>{ text } { learnMoreLink }</Notice>;
 	},
 
 	expiredDomains() {
@@ -70,7 +95,7 @@ export default React.createClass( {
 			} );
 			renewLink = renewLinkPlural;
 		}
-		return <Notice status="is-error" showDismiss={false}>{text} {renewLink}</Notice>
+		return <Notice status="is-error" showDismiss={ false }>{ text } { renewLink }</Notice>
 	},
 
 	expiringDomains() {
