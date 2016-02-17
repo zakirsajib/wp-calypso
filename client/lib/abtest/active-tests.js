@@ -99,4 +99,12 @@ module.exports = {
 		},
 		defaultVariation: 'allPlans'
 	},
+	sidebarOnCheckoutOfOneProduct: {
+		datestamp: '20000215',
+		variations: {
+			original: 50,
+			hidden: 50,
+		},
+		defaultVariation: 'original'
+	},
 };
