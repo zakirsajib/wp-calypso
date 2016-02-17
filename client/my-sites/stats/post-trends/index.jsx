@@ -136,14 +136,16 @@ export default React.createClass( {
 		} );
 
 		if( touchDetect.hasTouch() ) {
-			return;
+			return null;
 		}
 
 		return (
 
-			<div>
+			<div className="post-trends">
 				<SectionHeader label={ this.translate( 'Posting Activity' ) }></SectionHeader>
 				<Card>
+					<div className={ leftClass } onClick={ this.scrollLeft }><span className="left-arrow"></span></div>
+					<div className={ rightClass } onClick={ this.scrollRight }><span className="right-arrow"></span></div>
 					<div ref="wrapper" className="post-trends__wrapper">
 						<div className={ leftClass } onClick={ this.scrollLeft }><span className="left-arrow"></span></div>
 						<div className={ rightClass } onClick={ this.scrollRight }><span className="right-arrow"></span></div>

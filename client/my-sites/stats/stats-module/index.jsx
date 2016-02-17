@@ -103,6 +103,7 @@ module.exports = React.createClass( {
 
 		return (
 			<div>
+
 				<SectionHeader label={ this.props.moduleStrings.title }>
 					{ this.hasSummaryPage()
 					 	? ( <Button
