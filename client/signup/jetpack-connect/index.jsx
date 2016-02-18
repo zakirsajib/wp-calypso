@@ -27,15 +27,9 @@ export default React.createClass( {
 	render() {
 		return (
 			<Main>
-				<SiteURLEntry
-					step={ 1 }
-					steps={ this.props.steps } />
-				<LoginOrSignup
-					step={ 2 }
-					steps={ this.props.steps } />
-				<PickAPlan
-					step={ 3 }
-					steps={ this.props.steps }/>
+				<SiteURLEntry step={ 0 } />
+				<LoginOrSignup step={ 1 }/>
+				<PickAPlan step={ 2 }/>
 			</Main>
 		);
 	}
