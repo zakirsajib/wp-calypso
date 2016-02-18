@@ -123,6 +123,32 @@ export default React.createClass( {
 		this.setState( { stepOne } );
 	},
 
+	getVerticalIdsForCategory( topLevelCategory ) {
+		return this.state.verticalList.reduce( ( match, category ) => {
+			if ( category.value === topLevelCategory ) {
+				return category.stepTwo.map( c => c.value );
+			}
+			return match;
+		}, [] );
+	},
+
+	getThemesForThemeStep( vertical ) {
+		const businessCategories = this.getVerticalIdsForCategory( 'a8c.3' );
+		if ( -1 !== businessCategories.indexOf( vertical ) ) {
+			return [
+				{ name: 'Button', slug: 'button' },
+				{ name: 'Franklin', slug: 'franklin' },
+				{ name: 'Sapor', slug: 'sapor' },
+				{ name: 'Colinear', slug: 'colinear' },
+				{ name: 'Minnow', slug: 'minnow' },
+				{ name: 'Eighties', slug: 'eighties' },
+				{ name: 'Libre', slug: 'libre' },
+				{ name: 'Penscratch', slug: 'penscratch' },
+				{ name: 'Libretto', slug: 'libretto' },
+			];
+		}
+	},
+
 	handleNextStep( vertical ) {
 		const { value, label } = vertical;
 		analytics.tracks.recordEvent( 'calypso_survey_site_type', { type: this.props.surveySiteType } );
@@ -132,7 +158,8 @@ export default React.createClass( {
 		} else {
 			analytics.tracks.recordEvent( 'calypso_survey_category_click_level_one', { category: JSON.stringify( { value, label } ) } );
 		}
-		SignupActions.submitSignupStep( { stepName: this.props.stepName }, [], { surveySiteType: this.props.surveySiteType, surveyQuestion: vertical.value } );
+		const themes = this.getThemesForThemeStep( vertical.value );
+		SignupActions.submitSignupStep( { stepName: this.props.stepName }, [], { surveySiteType: this.props.surveySiteType, surveyQuestion: vertical.value, themes } );
 		this.props.goToNextStep();
 	}
 } );

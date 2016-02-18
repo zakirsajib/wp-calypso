@@ -71,7 +71,7 @@ module.exports = {
 		props: {
 			surveySiteType: ( current && current.toString().match( /\/start\/blog/ ) ) ? 'blog' : 'site'
 		},
-		providesDependencies: [ 'surveySiteType', 'surveyQuestion' ]
+		providesDependencies: [ 'surveySiteType', 'surveyQuestion', 'themes' ]
 	},
 
 	plans: {
