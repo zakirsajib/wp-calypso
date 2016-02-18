@@ -128,56 +128,6 @@ describe( '#connections()', () => {
 			1: connection
 		} );
 	} );
-
-	describe( 'persistence', () => {
-		before( () => {
-			sinon.stub( console, 'warn' );
-		} );
-		after( () => {
-			console.warn.restore();
-		} );
-		it( 'should persist data', () => {
-			const state = deepFreeze( {
-				1: { ID: 1, site_ID: 2916284 },
-				2: { ID: 2, site_ID: 2916284 }
-			} );
-			const persistedState = connections( state, { type: SERIALIZE } );
-			expect( persistedState ).to.eql( state );
-		} );
-
-		it( 'should load valid data', () => {
-			const persistedState = deepFreeze( {
-				1: { ID: 1, site_ID: 2916284 },
-				2: { ID: 2, site_ID: 2916284 }
-			} );
-			const state = connections( persistedState, {
-				type: DESERIALIZE
-			} );
-			expect( state ).to.eql( persistedState );
-		} );
-
-		it( 'should ignore loading data with invalid keys', () => {
-			const persistedState = deepFreeze( {
-				foo: { ID: 1, site_ID: 2916284 },
-				bar: { ID: 2, site_ID: 2916284 }
-			} );
-			const state = connections( persistedState, {
-				type: DESERIALIZE
-			} );
-			expect( state ).to.eql( {} );
-		} );
-
-		it( 'should ignore loading data with invalid values', () => {
-			const persistedState = deepFreeze( {
-				1: { ID: 1, site_ID: 'foo' },
-				2: { ID: 2, site_ID: 2916284 }
-			} );
-			const state = connections( persistedState, {
-				type: DESERIALIZE
-			} );
-			expect( state ).to.eql( {} );
-		} );
-	} );
 } );
 
 describe( '#connectionsBySiteId()', () => {
@@ -232,56 +182,6 @@ describe( '#connectionsBySiteId()', () => {
 		expect( state ).to.eql( {
 			77203074: [ 1, 2 ],
 			2916284: [ 1 ]
-		} );
-	} );
-
-	describe( 'persistence', () => {
-		before( () => {
-			sinon.stub( console, 'warn' );
-		} );
-		after( () => {
-			console.warn.restore();
-		} );
-		it( 'should persist data', () => {
-			const state = deepFreeze( {
-				77203074: [ 1, 2 ],
-				2916284: [ 1 ]
-			} );
-			const persistedState = connectionsBySiteId( state, { type: SERIALIZE } );
-			expect( persistedState ).to.eql( state );
-		} );
-
-		it( 'should load valid data', () => {
-			const persistedState = deepFreeze( {
-				77203074: [ 1, 2 ],
-				2916284: [ 1 ]
-			} );
-			const state = connectionsBySiteId( persistedState, {
-				type: DESERIALIZE
-			} );
-			expect( state ).to.eql( persistedState );
-		} );
-
-		it( 'should ignore loading data with invalid keys', () => {
-			const persistedState = deepFreeze( {
-				77203074: [ 1, 2 ],
-				foo: [ 1 ]
-			} );
-			const state = connectionsBySiteId( persistedState, {
-				type: DESERIALIZE
-			} );
-			expect( state ).to.eql( {} );
-		} );
-
-		it( 'should ignore loading data with invalid values', () => {
-			const persistedState = deepFreeze( {
-				77203074: [ 1, 'bar' ],
-				2916284: [ 1 ]
-			} );
-			const state = connectionsBySiteId( persistedState, {
-				type: DESERIALIZE
-			} );
-			expect( state ).to.eql( {} );
 		} );
 	} );
 } );

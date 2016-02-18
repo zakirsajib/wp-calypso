@@ -14,11 +14,6 @@ import {
 	SERIALIZE,
 	DESERIALIZE
 } from 'state/action-types';
-import { isValidStateWithSchema } from 'state/utils';
-import {
-	connectionsSchema,
-	connectionsBySiteIdSchema
-} from './schema';
 
 /**
  * Track the current status for fetching connections. Maps site ID to the
@@ -61,10 +56,7 @@ export function connections( state = {}, action ) {
 		case SERIALIZE:
 			return state;
 		case DESERIALIZE:
-			if ( isValidStateWithSchema( state, connectionsSchema ) ) {
-				return state;
-			}
-			return {};
+			return state;
 	}
 
 	return state;
@@ -88,10 +80,7 @@ export function connectionsBySiteId( state = {}, action ) {
 		case SERIALIZE:
 			return state;
 		case DESERIALIZE:
-			if ( isValidStateWithSchema( state, connectionsBySiteIdSchema ) ) {
-				return state;
-			}
-			return {};
+			return state;
 	}
 
 	return state;
