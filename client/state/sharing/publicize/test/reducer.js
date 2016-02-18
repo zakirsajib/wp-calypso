@@ -2,7 +2,6 @@
  * External dependencies
  */
 import { expect } from 'chai';
-import sinon from 'sinon';
 import deepFreeze from 'deep-freeze';
 
 /**
@@ -50,12 +49,6 @@ describe( '#fetchingConnections()', () => {
 	} );
 
 	describe( 'persistence', () => {
-		before( () => {
-			sinon.stub( console, 'warn' );
-		} );
-		after( () => {
-			console.warn.restore();
-		} );
 		it( 'never loads persisted data', () => {
 			const persistedState = deepFreeze( {
 				2916284: false,
