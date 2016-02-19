@@ -18,6 +18,7 @@ import analytics from 'analytics';
 import i18n from 'lib/mixins/i18n';
 import trackScrollPage from 'lib/track-scroll-page';
 import buildTitle from 'lib/screen-title/utils';
+import route from 'lib/route';
 import { getAnalyticsData } from './helpers';
 import { getCurrentUser } from 'state/current-user/selectors';
 import { setSection } from 'state/ui/actions';
@@ -113,17 +114,36 @@ export function loggedOut( context, next ) {
 	next();
 }
 
+function getDetailsProps( context ) {
+	const { slug } = context.params;
+
+	let basePath = route.sectionify( context.path );
+	let analyticsPageTitle = 'Themes';
+
+	if ( slug ) {
+		basePath = basePath + '/:slug';
+		analyticsPageTitle += ' > Details Sheet';
+	}
+
+	const runClientAnalytics = function() {
+		analytics.pageView.record( basePath, analyticsPageTitle );
+	};
+
+	return {
+		themeSlug: slug,
+		title: buildTitle(
+			i18n.translate( 'Theme Details', { textOnly: true } )
+		),
+		runClientAnalytics
+	}
+}
+
 export function details( context, next ) {
 	const user = getCurrentUser( context.store.getState() );
 	const Head = user
 		? require( 'layout/head' )
 		: require( 'my-sites/themes/head' );
-	const props = {
-		themeSlug: context.params.slug,
-		title: buildTitle(
-			i18n.translate( 'Theme Details', { textOnly: true } )
-		)
-	}
+	const props = getDetailsProps( context );
 
 	context.store.dispatch( setSection( 'themes', {
 		hasSidebar: false,
