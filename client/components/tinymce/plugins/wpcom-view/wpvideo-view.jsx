@@ -3,8 +3,8 @@
  */
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import omit from 'lodash/object/omit';
-import pick from 'lodash/object/pick';
+import omitBy from 'lodash/omitBy';
+import pick from 'lodash/pick';
 import QueryString from 'querystring';
 import tinymce from 'tinymce/tinymce';
 
@@ -95,7 +95,7 @@ class WpVideoView extends Component {
 
 	getEmbedUrl( shortcodeAttributes ) {
 		const defaultAttributeValues = { hd: false, at: 0, defaultLangCode: undefined };
-		const attributesWithNonDefaultValues = omit(
+		const attributesWithNonDefaultValues = omitBy(
 			shortcodeAttributes,
 			( value, key ) => defaultAttributeValues[key] === value );
 		const queryStringAttributes = ['autoplay', 'hd', 'loop', 'at', 'defaultLangCode'];
