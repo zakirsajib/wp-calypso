@@ -33,6 +33,8 @@ var analytics = require( 'analytics' ),
 	SiteState = require( 'lib/reader-site-store/constants' ).state,
 	SiteStore = require( 'lib/reader-site-store' ),
 	SiteStoreActions = require( 'lib/reader-site-store/actions' ),
+	FeedStore = require( 'lib/feed-store' ),
+	FeedStoreActions = require( 'lib/feed-store/actions' ),
 	FollowButton = require( 'reader/follow-button' ),
 	utils = require( 'reader/utils' ),
 	LikeHelper = require( 'reader/like-helper' ),
@@ -42,7 +44,8 @@ var analytics = require( 'analytics' ),
 	ShareHelper = require( 'reader/share/helper' ),
 	DiscoverHelper = require( 'reader/discover/helper' ),
 	DiscoverVisitLink = require( 'reader/discover/visit-link' ),
-	readerRoute = require( 'reader/route' );
+	readerRoute = require( 'reader/route' ),
+	smartSetState = require( 'lib/react-smart-set-state' );
 
 var loadingPost = {
 		URL: '',
@@ -144,6 +147,7 @@ FullPostView = React.createClass( {
 		var post = this.props.post,
 			site = this.props.site,
 			siteish = utils.siteishFromSiteAndPost( site, post ),
+			feed = this.props.feed,
 			hasFeaturedImage = post &&
 				post.canonical_image &&
 				! ( post.display_type & DISPLAY_TYPES.CANONICAL_IN_CONTENT ),
@@ -203,7 +207,7 @@ FullPostView = React.createClass( {
 							onSelect={ this.pickSite }
 							onClick={ this.handleSiteClick } />
 
-						<FollowButton siteUrl={ post.site_URL } />
+						{ feed && feed.feed_URL && <FollowButton siteUrl={ feed && feed.feed_URL } /> }
 					</div>
 
 					{ hasFeaturedImage
@@ -346,6 +350,7 @@ FullPostDialog = React.createClass( {
 					ref="fullPost"
 					post={ this.props.post }
 					site={ this.props.site }
+					feed={ this.props.feed }
 					shouldShowComments={ shouldShowComments } />
 			</Dialog>
 		);
@@ -369,16 +374,26 @@ function getSite( siteId ) {
 	return site;
 }
 
+function getFeed( feedId ) {
+	var feed = FeedStore.get( feedId );
+	if ( ! feed ) {
+		FeedStoreActions.fetch( feedId );
+	}
+	return feed;
+}
+
 FullPostContainer = React.createClass( {
 
 	mixins: [ PureRenderMixin ],
+
+	smartSetState: smartSetState,
 
 	getInitialState: function() {
 		return assign( { isVisible: false }, this.getStateFromStores() );
 	},
 
 	getStateFromStores: function( props ) {
-		var post, site, title, commentCount;
+		var post, site, feed, title, commentCount;
 
 		props = props || this.props;
 
@@ -410,7 +425,11 @@ FullPostContainer = React.createClass( {
 			site = getSite( post.site_ID );
 		}
 
-		return { post, site, title, commentCount };
+		if ( post && post.feed_ID ) {
+			feed = getFeed( post.feed_ID );
+		}
+
+		return { post, site, feed, title, commentCount };
 	},
 
 	attemptToSendPageView: function() {
@@ -444,6 +463,7 @@ FullPostContainer = React.createClass( {
 		PostStore.on( 'change', this._onChange );
 		CommentStore.on( 'change', this._onChange );
 		SiteStore.on( 'change', this._onChange );
+		FeedStore.on( 'change', this._onChange );
 
 		this.hasSentPageView = false;
 		this.hasLoaded = false;
@@ -458,7 +478,7 @@ FullPostContainer = React.createClass( {
 	},
 
 	componentWillReceiveProps: function( nextProps ) {
-		this.setState( this.getStateFromStores( nextProps ) );
+		this.smartSetState( this.getStateFromStores( nextProps ) );
 	},
 
 	componentDidUpdate: function( prevProps ) {
@@ -476,12 +496,12 @@ FullPostContainer = React.createClass( {
 		PostStore.off( 'change', this._onChange );
 		CommentStore.off( 'change', this._onChange );
 		SiteStore.off( 'change', this._onChange );
+		FeedStore.off( 'change', this._onChange );
 	},
 
 	_onChange: function() {
 		var newState = this.getStateFromStores();
-		if ( newState.post !== this.state.post || newState.site !== this.state.site || newState.title !== this.state.title ) {
-			this.setState( newState );
+		if ( this.smartSetState( newState ) ) {
 			this.attemptToSendPageView();
 		}
 	},
@@ -499,7 +519,8 @@ FullPostContainer = React.createClass( {
 				isVisible={ this.state.isVisible }
 				post={ this.state.post }
 				commentCount={ this.state.commentCount }
-				site={ this.state.site } />
+				site={ this.state.site }
+				feed={ this.state.feed }/>
 		);
 	}
 
