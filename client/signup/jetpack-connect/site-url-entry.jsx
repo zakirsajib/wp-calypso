@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 
-import Card from 'components/card';
 import Gridicon from 'components/gridicon';
 import SiteURLInput from './site-url-input';
 import ConnectHeader from './connect-header';
@@ -22,13 +21,9 @@ export default React.createClass( {
 				<ConnectHeader
 					headerText={ this.translate( 'Install Jetpack' ) }
 					subHeaderText={ this.translate( 'Get WordPress.com connected to your self-hosted site.' ) }
-					step={ 1 }
-					steps={ 3 }
-					{ ...this.props }/>
+					{ ...this.props } />
 
-				<Card>
-					<SiteURLInput />
-				</Card>
+				<SiteURLInput />
 
 				<LoggedOutFormLinks>
 					<LoggedOutFormLinkItem href="http://jetpack.com">{ this.translate( 'Install Jetpack Manually' ) }</LoggedOutFormLinkItem>

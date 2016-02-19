@@ -1,8 +1,5 @@
 import React, { PropTypes } from 'react';
 
-import Button from 'components/button';
-import FormTextInput from 'components/forms/form-text-input';
-import FlowProgressIndicator from '../flow-progress-indicator';
 import StepHeader from '../step-header';
 
 export default React.createClass( {
