@@ -32,7 +32,7 @@ export default React.createClass( {
 				<div className="flow-progress-indicator">
 					{ this.translate( 'Step %(stepNumber)d of %(stepTotal)d', {
 						args: {
-							stepNumber: this.props.step+1,
+							stepNumber: this.props.step,
 							stepTotal: this.props.steps
 						}
 					} ) }

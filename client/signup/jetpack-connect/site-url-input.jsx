@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 
+
 import Card from 'components/card';
 import FormTextInput from 'components/forms/form-text-input';
 import FormLabel from 'components/forms/form-label';
@@ -9,7 +10,7 @@ import Button from 'components/button';
 export default React.createClass( {
 	displayName: 'JetpackConnectSiteURLInput',
 
-	render() {
+	render() {		
 		return (
 			<Card className="jetpack-connect__site-url-input-container">
 				<div className="site-address-container">
