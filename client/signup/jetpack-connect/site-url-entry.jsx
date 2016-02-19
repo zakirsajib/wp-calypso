@@ -27,7 +27,7 @@ export default React.createClass( {
 
 				<LoggedOutFormLinks>
 					<LoggedOutFormLinkItem href="http://jetpack.com">{ this.translate( 'Install Jetpack Manually' ) }</LoggedOutFormLinkItem>
-					<LoggedOutFormLinkItem href="/start"><Gridicon size={ 18 } icon="chevron-left" />{ this.translate( 'Host a site on WordPress.com' ) }</LoggedOutFormLinkItem>
+					<LoggedOutFormLinkItem href="/start">{ this.translate( 'Host a site on WordPress.com' ) }</LoggedOutFormLinkItem>
 				</LoggedOutFormLinks>
 			</div>
 		);
