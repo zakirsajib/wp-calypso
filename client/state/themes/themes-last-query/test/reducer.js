@@ -3,6 +3,8 @@
  */
 import { expect } from 'chai';
 import { fromJS } from 'immutable';
+import sinon from 'sinon';
+import deepFreeze from 'deep-freeze';
 
 /**
  * Internal dependencies
@@ -15,8 +17,14 @@ import reducer, { initialState } from '../reducer';
 
 describe( 'themes-last-query reducer', () => {
 	describe( 'persistence', () => {
+		before( () => {
+			sinon.stub( console, 'warn' );
+		} );
+		after( () => {
+			console.warn.restore();
+		} );
 		it( 'persists state and converts to a plain JS object', () => {
-			const jsObject = Object.freeze( {
+			const jsObject = deepFreeze( {
 				currentSiteId: 12345678,
 				previousSiteId: 2123982,
 				isJetpack: false,
@@ -32,7 +40,7 @@ describe( 'themes-last-query reducer', () => {
 			expect( persistedState ).to.eql( jsObject );
 		} );
 		it( 'loads valid persisted state and converts to immutable.js object', () => {
-			const jsObject = Object.freeze( {
+			const jsObject = deepFreeze( {
 				currentSiteId: 12345678,
 				previousSiteId: 2123982,
 				isJetpack: false,
@@ -47,8 +55,8 @@ describe( 'themes-last-query reducer', () => {
 			expect( state ).to.eql( fromJS( jsObject ) );
 		} );
 
-		it.skip( 'should ignore loading data with invalid keys ', () => {
-			const jsObject = Object.freeze( {
+		it( 'should ignore loading data with invalid keys ', () => {
+			const jsObject = deepFreeze( {
 				currentSiteId: 12345678,
 				wrongkey: 2123982,
 				isJetpack: false,
@@ -63,14 +71,14 @@ describe( 'themes-last-query reducer', () => {
 			expect( state ).to.eql( initialState );
 		} );
 
-		it.skip( 'should ignore loading data with invalid values ', () => {
-			const jsObject = Object.freeze( {
+		it( 'should ignore loading data with invalid values ', () => {
+			const jsObject = deepFreeze( {
 				currentSiteId: 12345678,
 				previousSiteId: 2123982,
 				isJetpack: false,
 				lastParams: {
 					search: 'foo bar',
-					tier: 'unknown tier',
+					tier: 1234,
 					page: 0,
 					perPage: 20
 				}
