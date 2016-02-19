@@ -3,6 +3,7 @@
  */
 import { combineReducers } from 'redux';
 import keyBy from 'lodash/keyBy';
+import merge from 'lodash/merge';
 
 /**
  * Internal dependencies
@@ -181,7 +182,7 @@ export function edits( state = {}, action ) {
 				[ siteId ]: Object.assign( {}, state[ siteId ] )
 			} );
 
-			state[ siteId ][ postId ] = Object.assign( {}, state[ siteId ][ postId ], post );
+			state[ siteId ][ postId ] = merge( {}, state[ siteId ][ postId ], post );
 			return state;
 
 		case SERIALIZE:
