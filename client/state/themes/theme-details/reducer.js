@@ -8,6 +8,8 @@ import { Map, fromJS } from 'immutable';
  */
 import ActionTypes from '../action-types';
 import { DESERIALIZE, SERIALIZE } from '../../action-types';
+import { themeDetailsSchema } from './schema';
+import { isValidStateWithSchema } from 'state/utils';
 
 export default ( state = Map(), action ) => {
 	switch ( action.type ) {
@@ -16,9 +18,12 @@ export default ( state = Map(), action ) => {
 				.set( action.themeId, Map( {
 					name: action.themeName,
 					author: action.themeAuthor
-				} ) )
+				} ) );
 		case DESERIALIZE:
-			return fromJS( state );
+			if ( isValidStateWithSchema( state, themeDetailsSchema ) ) {
+				return fromJS( state );
+			}
+			return Map();
 		case SERIALIZE:
 			return state.toJS();
 	}
