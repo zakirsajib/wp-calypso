@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import page from 'page';
+import config from 'config';
 
 /**
  * Internal dependencies
@@ -116,6 +117,7 @@ module.exports = React.createClass( {
 	submitKayakoTicket: function( contactForm ) {
 		const { subject, message, howCanWeHelp, howYouFeel, siteSlug } = contactForm;
 		const { locale } = this.state.olark;
+		const client_slug = config( 'client_slug' );
 		const site = sites.getSite( siteSlug );
 
 		const ticketMeta = [
@@ -128,7 +130,7 @@ module.exports = React.createClass( {
 
 		this.setState( { isSubmitting: true } );
 
-		wpcom.submitKayakoTicket( subject, kayakoMessage, locale, ( error ) => {
+		wpcom.submitKayakoTicket( subject, kayakoMessage, locale, client_slug, ( error ) => {
 			if ( error ) {
 				// TODO: bump a stat here
 				notices.error( error.message );
@@ -155,10 +157,11 @@ module.exports = React.createClass( {
 
 	submitSupportForumsTopic: function( contactForm ) {
 		const { subject, message } = contactForm;
+		const client_slug = config( 'client_slug' );
 
 		this.setState( { isSubmitting: true } );
 
-		wpcom.submitSupportForumsTopic( subject, message, ( error, data ) => {
+		wpcom.submitSupportForumsTopic( subject, message, client_slug, ( error, data ) => {
 			if ( error ) {
 				// TODO: bump a stat here
 				notices.error( error.message );
