@@ -26,7 +26,7 @@ export default React.createClass( {
 
 	render() {
 		return (
-			<Main>
+			<Main className="jetpack-connect__main">
 				<SiteURLEntry step={ 0 } />
 				<LoginOrSignup step={ 1 }/>
 				<PickAPlan step={ 2 }/>

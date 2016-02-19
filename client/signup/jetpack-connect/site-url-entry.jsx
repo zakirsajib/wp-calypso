@@ -1,8 +1,12 @@
 import React, { PropTypes } from 'react';
 
-import Button from 'components/button';
-import FormTextInput from 'components/forms/form-text-input';
+import Card from 'components/card';
+import Gridicon from 'components/gridicon';
+import SiteURLInput from './site-url-input';
 import ConnectHeader from './connect-header';
+import LoggedOutForm from 'components/logged-out-form';
+import LoggedOutFormLinks from 'components/logged-out-form/links';
+import LoggedOutFormLinkItem from 'components/logged-out-form/link-item';
 
 export default React.createClass( {
 	displayName: 'JetpackConnectSiteURLEntry',
@@ -16,9 +20,20 @@ export default React.createClass( {
 		return (
 			<div className="jetpack-connect__site-url-entry-container">
 				<ConnectHeader
-					label={ this.translate( 'Install Jetpack' ) }
-					{...this.props }/>
+					headerText={ this.translate( 'Install Jetpack' ) }
+					subHeaderText={ this.translate( 'Get WordPress.com connected to your self-hosted site.' ) }
+					step={ 1 }
+					steps={ 3 }
+					{ ...this.props }/>
 
+				<Card>
+					<SiteURLInput />
+				</Card>
+
+				<LoggedOutFormLinks>
+					<LoggedOutFormLinkItem href="http://jetpack.com">{ this.translate( 'Install Jetpack Manually' ) }</LoggedOutFormLinkItem>
+					<LoggedOutFormLinkItem href="/start"><Gridicon size={ 18 } icon="chevron-left" />{ this.translate( 'Host a site on WordPress.com' ) }</LoggedOutFormLinkItem>
+				</LoggedOutFormLinks>
 			</div>
 		);
 	}

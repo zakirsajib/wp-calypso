@@ -1,3 +1,52 @@
+.jetpack-connect__main {
+	max-width: 400px;
+}
+
+.jetpack-connect__site-url-entry-container {
+	max-width: 400px;
+}
+
 .jetpack-connect__header-container {
 	text-align: center;
+
+	.step-header {
+		margin-bottom: 16px;
+	}
+}
+
+.jetpack-connect__site-url-input-container {
+	position: relative;
+
+
+	.site-address-container {
+
+		.gridicon {
+			position: absolute;
+			top: 34px;
+			left: 8px;
+			color: lighten( $gray, 20% );
+		}
+
+		.form-text-input {
+			padding-left: 36px;
+		}
+	}
+
+	.button {
+		width: 100%;
+		margin-top: 16px;
+		word-wrap: nowrap;
+	}
+}
+
+.logged-out-form__links {
+	max-width: 100%;
+
+	.logged-out-form__link-item {
+		.gridicon {
+			position: relative;
+			top: 4px;
+		}
+	}
+
 }

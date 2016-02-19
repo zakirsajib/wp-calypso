@@ -3,6 +3,7 @@ import React, { PropTypes } from 'react';
 import Button from 'components/button';
 import FormTextInput from 'components/forms/form-text-input';
 import FlowProgressIndicator from '../flow-progress-indicator';
+import StepHeader from '../step-header';
 
 export default React.createClass( {
 	displayName: 'JetpackConnectHeader',
@@ -31,9 +32,15 @@ export default React.createClass( {
 				{ this.props.showLogo
 				 	? this.renderJetpackLogo()
 					: null }
-
-				<h1 className="step-header__title">{ this.props.label }</h1>
-				<p className="step-header__subtitle">{ this.setSubHeaderText }</p>
+				<div className="flow-progress-indicator">
+					{ this.translate( 'Step %(stepNumber)d of %(stepTotal)d', {
+						args: {
+							stepNumber: this.props.step+1,
+							stepTotal: this.props.steps
+						}
+					} ) }
+				</div>
+				<StepHeader { ...this.props }/>
 			</div>
 		);
 	}
