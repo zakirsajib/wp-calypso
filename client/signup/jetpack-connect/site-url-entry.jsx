@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 
-import Gridicon from 'components/gridicon';
 import SiteURLInput from './site-url-input';
 import ConnectHeader from './connect-header';
 import LoggedOutForm from 'components/logged-out-form';
