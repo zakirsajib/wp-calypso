@@ -23,7 +23,7 @@ module.exports = React.createClass( {
 			<header className="step-header">
 				<h1 className="step-header__title">{ preventWidows( this.props.headerText, 2 ) }</h1>
 				<p className="step-header__subtitle">{ preventWidows( this.props.subHeaderText, 2 ) }</p>
-				<Button compact href="/jetpack/connect">{ this.translate( 'Or host your own site with Jetpack' ) }</Button>
+				{ this.props.children }
 			</header>
 		);
 	}

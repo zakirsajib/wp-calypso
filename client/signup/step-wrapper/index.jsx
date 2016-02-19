@@ -1,15 +1,16 @@
 /**
  * External dependencies
  */
-var React = require( 'react' );
+import React from 'react';
 
 /**
  * Internal dependencies
  */
-var StepHeader = require( 'signup/step-header' ),
-	NavigationLink = require( 'signup/navigation-link' );
+import StepHeader from 'signup/step-header';
+import NavigationLink from 'signup/navigation-link';
+import Button from 'components/button';
 
-module.exports = React.createClass( {
+export default React.createClass( {
 	displayName: 'StepWrapper',
 
 	renderSkip: function() {
@@ -55,7 +56,9 @@ module.exports = React.createClass( {
 			<div className="step-wrapper">
 				<StepHeader
 					headerText={ this.headerText() }
-					subHeaderText={ this.subHeaderText() } />
+					subHeaderText={ this.subHeaderText() }>
+					{ this.props.headerButton }
+				</StepHeader>
 				<div className="is-animated-content">
 					{ this.props.stepContent }
 					<div className="step-wrapper__buttons">
