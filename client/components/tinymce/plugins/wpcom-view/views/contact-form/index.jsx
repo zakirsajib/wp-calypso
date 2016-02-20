@@ -2,13 +2,13 @@
  * External dependencies
  */
 import React from 'react';
-import { deserialize } from '../contact-form/shortcode-utils';
+import { deserialize } from 'components/tinymce/plugins/contact-form/shortcode-utils';
 
 /**
  * Internal dependecies
  */
 import shortcodeUtils from 'lib/shortcode';
-import renderField from './views/contact-form/preview-fields';
+import renderField from './preview-fields';
 
 export default React.createClass( {
 	statics: {
