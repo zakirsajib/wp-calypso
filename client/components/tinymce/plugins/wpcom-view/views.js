@@ -24,7 +24,7 @@ let views = {
 };
 
 if ( config.isEnabled( 'post-editor/contact-form' ) ) {
-	views.contact = ContactFormView;
+	views.contactForm = ContactFormView;
 }
 
 const components = mapValues( views, ( view ) => {
