@@ -3,7 +3,8 @@
  */
 var update = require( 'react-addons-update' ),
 	i18n = require( 'lib/mixins/i18n' ),
-	extend = require( 'lodash/extend' );
+	extend = require( 'lodash/extend' ),
+	config = require( 'config' );
 
 /**
  * Internal dependencies
@@ -123,7 +124,7 @@ function isCreditCardPaymentsEnabled( cart ) {
 }
 
 function isPayPalExpressEnabled( cart ) {
-	return cart.allowed_payment_methods.indexOf( 'WPCOM_Billing_PayPal_Express' ) >= 0;
+	return cart.allowed_payment_methods.indexOf( 'WPCOM_Billing_PayPal_Express' ) >= 0 && ! config.isEnabled( 'desktop' );
 }
 
 module.exports = {
