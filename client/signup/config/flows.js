@@ -135,6 +135,13 @@ const flows = {
 		lastModified: null
 	},
 
+	'delta-new': {
+		steps: [ 'themes', 'domains', 'plans', 'user' ],
+		destination: getCheckoutDestination,
+		description: 'A copy of the `main` flow for the delta-new landing campaign',
+		lastModified: null
+	},
+
 	'site-user': {
 		steps: [ 'site', 'user' ],
 		destination: '/me/next?welcome',
