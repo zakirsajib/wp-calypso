@@ -2,6 +2,7 @@
  * External dependencies
  */
 var React = require( 'react' ),
+	ReactDOM = require('react-dom' ),
 	store = require( 'store' ),
 	ReactInjection = require( 'react/lib/ReactInjection' ),
 	some = require( 'lodash/some' ),
@@ -45,7 +46,8 @@ var config = require( 'config' ),
 	renderWithReduxStore = require( 'lib/react-helpers' ).renderWithReduxStore,
 	bindWpLocaleState = require( 'lib/wp/localization' ).bindState,
 	// The following components require the i18n mixin, so must be required after i18n is initialized
-	Layout;
+	Layout,
+	Page404 = require( 'components/page-404' );
 
 function init() {
 	var i18nLocaleStringsObject = null;
@@ -374,7 +376,10 @@ function reduxStoreReady( reduxStore ) {
 		if ( ! config.isEnabled( 'code-splitting' ) ) {
 			// If code-splitting is not enabled and we got to this route handler, no section route was matched.
 
-			// Show 404 component.
+			ReactDOM.render(
+				<Page404 />,
+				document.getElementById( 'primary' )
+			);
 
 			return;
 		}
@@ -384,8 +389,11 @@ function reduxStoreReady( reduxStore ) {
 		// When code-splitting is enabled, chunkName is set when a section route is matched (e.g.: /stats).
 		// If it is not set, no section route was matched and no section JS chunk is loaded. Show 404.
 		if ( ! appState.ui.chunkName ) {
-			// Show 404 component.
-			
+			ReactDOM.render(
+				<Page404 />,
+				document.getElementById( 'primary' )
+			);
+
 			return;
 		}
 
